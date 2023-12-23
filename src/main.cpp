@@ -1,8 +1,5 @@
 #include "main.h"
 #include "config.hpp" 
-#include <iostream>
-#include <fstream>
-#include <string>
 
 
 // ANCHOR runtime variables
@@ -56,10 +53,6 @@ void arcadeCurve(pros::controller_analog_e_t power,
 // ANCHOR opctrl
 void opcontrol() {
   while (true) { // calls the arcade drive function
-    
-    if(master.get_digital(DIGITAL_UP))
-    
-    /*
     arcadeCurve(pros::E_CONTROLLER_ANALOG_LEFT_Y,
                pros::E_CONTROLLER_ANALOG_RIGHT_X, master, 10);
 
@@ -151,7 +144,7 @@ void opcontrol() {
     if (!ratcheted) {
       ratchet.set_value(false);
     }
-  */
+  
     pros::delay(20);
   }
 }
