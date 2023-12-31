@@ -1,5 +1,5 @@
 #include "main.h"
-#include "config.hpp" 
+#include "config.hpp"
 
 
 // ANCHOR runtime variables
@@ -11,28 +11,44 @@ bool hooked = false;
 bool ratcheted = false;
 bool lifted = false;
 
+ASSET(jackreiman_txt);
+
+void sv() {
+  // loop forever
+  while (true) {
+    lemlib::Pose pose =
+        chassis.getPose(); // get the current position of the robot
+    pros::lcd::print(0, "x: %f", pose.x);           // print the x position
+    pros::lcd::print(1, "y: %f", pose.y);           // print the y position
+    pros::lcd::print(2, "heading: %f", pose.theta); // print the heading
+    pros::delay(10);
+  }
+}
 
 void initialize() {
-	pros::lcd::initialize();
+  pros::lcd::initialize();
   chassis.calibrate();
   cata_rot.reset_position();
   lift_rot.reset_position();
-  pros::Task continuous{[=] { // creates a lambda task for catapult control 
+  pros::Task continuous{[=] { // creates a lambda task for catapult control
     cata.control();
   }};
-  chassis.setPose(0, 0, 0);
+  chassis.setPose(31.968, -9.056, 0);
+  pros::Task sophieVang(sv);
 }
 
 void disabled() {}
 
 void competition_initialize() {}
 
-void autonomous() {}
-
+void autonomous() {
+  chassis.follow(jackreiman_txt, 10,30000000);
+  
+}
 // ANCHOR opcontrol curve implementation
 void arcadeCurve(pros::controller_analog_e_t power,
-                pros::controller_analog_e_t turn, pros::Controller mast,
-                float t) {
+                 pros::controller_analog_e_t turn, pros::Controller mast,
+                 float t) {
   up = mast.get_analog(power);
   down = mast.get_analog(turn);
 
@@ -54,7 +70,7 @@ void arcadeCurve(pros::controller_analog_e_t power,
 void opcontrol() {
   while (true) { // calls the arcade drive function
     arcadeCurve(pros::E_CONTROLLER_ANALOG_LEFT_Y,
-               pros::E_CONTROLLER_ANALOG_RIGHT_X, master, 10);
+                pros::E_CONTROLLER_ANALOG_RIGHT_X, master, 10);
 
     // intake
     if (master.get_digital(DIGITAL_L1)) // intake
@@ -126,8 +142,9 @@ void opcontrol() {
     } else if (master.get_digital(DIGITAL_DOWN)) {
       left_motors[2] = -127;
       right_motors[2] = -127;
-    } 
-    if (pto.pto_override == true && !master.get_digital(DIGITAL_DOWN) && !master.get_digital(DIGITAL_UP)){
+    }
+    if (pto.pto_override == true && !master.get_digital(DIGITAL_DOWN) &&
+        !master.get_digital(DIGITAL_UP)) {
       left_motors[2] = 0;
       right_motors[2] = 0;
       pto.pto_override = false;
@@ -144,8 +161,7 @@ void opcontrol() {
     if (!ratcheted) {
       ratchet.set_value(false);
     }
-  
+
     pros::delay(20);
   }
 }
-
