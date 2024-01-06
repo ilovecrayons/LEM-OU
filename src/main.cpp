@@ -12,7 +12,7 @@ bool hooked = false;
 bool ratcheted = false;
 bool lifted = false;
 
-ASSET(closedisrupt_txt)
+
 
 void sv() {
   // loop forever
@@ -34,7 +34,7 @@ void initialize() {
   pros::Task continuous{[=] { // creates a lambda task for catapult control
     cata.control();
   }};
-  chassis.setPose(-35.404, -58.153, 270);
+  chassis.setPose(-47, -58, 0);
   pros::Task sophieVang(sv);
 }
 
@@ -43,8 +43,9 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
-  chassis.follow(closedisrupt_txt, 10, 20000);
-  //chassis.waitUntil(10);
+  close();
+  
+  
 }
 // ANCHOR opcontrol curve implementation
 void arcadeCurve(pros::controller_analog_e_t power,
