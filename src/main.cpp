@@ -1,5 +1,6 @@
 #include "main.h"
 #include "config.hpp"
+#include "autons.hpp"
 
 
 // ANCHOR runtime variables
@@ -11,7 +12,7 @@ bool hooked = false;
 bool ratcheted = false;
 bool lifted = false;
 
-ASSET(jackreiman_txt);
+ASSET(closedisrupt_txt)
 
 void sv() {
   // loop forever
@@ -33,7 +34,7 @@ void initialize() {
   pros::Task continuous{[=] { // creates a lambda task for catapult control
     cata.control();
   }};
-  chassis.setPose(31.968, -9.056, 0);
+  chassis.setPose(-35.404, -58.153, 270);
   pros::Task sophieVang(sv);
 }
 
@@ -42,8 +43,8 @@ void disabled() {}
 void competition_initialize() {}
 
 void autonomous() {
-  chassis.follow(jackreiman_txt, 10,30000000);
-  
+  chassis.follow(closedisrupt_txt, 10, 20000);
+  //chassis.waitUntil(10);
 }
 // ANCHOR opcontrol curve implementation
 void arcadeCurve(pros::controller_analog_e_t power,

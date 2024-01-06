@@ -5,13 +5,15 @@
 #include <string>
 
 
-void close(){
 
-}
+void close() {
 
-void far(){
 
-}
+  }
+
+void sixRush() {}
+
+void sixSafe(){}
 
 void skills(){
 

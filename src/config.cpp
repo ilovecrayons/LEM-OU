@@ -68,7 +68,7 @@ pros::Imu inertial_sensor(INERTIAL_SENSOR_PORT); // inertial sensor
 lemlib::Drivetrain drivetrain{
     &left_motors,  // left drivetrain motors
     &right_motors, // right drivetrain motors
-    10,            // track width
+    11.25,            // track width
     3.25,          // wheel diameter
     360,           // wheel rpm
     1              // chase power
