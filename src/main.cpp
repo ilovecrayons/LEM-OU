@@ -34,7 +34,6 @@ void initialize() {
   pros::Task continuous{[=] { // creates a lambda task for catapult control
     cata.control();
   }};
-  chassis.setPose(-47, -58, 0);
   pros::Task sophieVang(sv);
 }
 

@@ -3,7 +3,7 @@
 
 // ANCHOR device port configuration
 
-constexpr int LEFT_FRONT_PORT{-1};
+constexpr int LEFT_FRONT_PORT{-4};
 constexpr int LEFT_MIDDLE_PORT{-2};
 constexpr int LEFT_BACK_PORT{-3};
 constexpr int RIGHT_FRONT_PORT{17};
@@ -71,7 +71,7 @@ lemlib::Drivetrain drivetrain{
     11.25,            // track width
     3.25,          // wheel diameter
     360,           // wheel rpm
-    1              // chase power
+    2              // chase power
 };
 
 lemlib::OdomSensors sensors{nullptr, nullptr, nullptr, nullptr,
