@@ -91,12 +91,12 @@ lemlib::ControllerSettings lateralController{
 
 lemlib::ControllerSettings angularController{
     2,   // kp
-    0,   // ki
-    10,  // kd
-    0,   // windup range
-    0.25,   // small error range
+    0.2,   // ki
+    12,  // kd
+    10,   // windup range
+    1,   // small error range
     50, // small timeout
-    0.75,   // big error range
+    2,   // big error range
     200, // big error timeout
     0  // slew
 };

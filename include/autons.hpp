@@ -2,8 +2,7 @@
 #pragma once
 #include "main.h"
 #include "lemlib/api.hpp"
-void sixRush();
-void sixSafe();
-void close();
+void closeSafe();
+void closeDisrupt();
 void skills();
 void trustAlliance();
