@@ -11,6 +11,8 @@ extern ADIDigitalOut pto_piston;
 extern ADIDigitalOut ratchet;
 extern ADIDigitalOut hook;
 
+extern ADIDigitalIn bumper;
+
 extern Motor left_front_motor;
 extern Motor left_middle_motor;
 extern Motor left_back_motor;

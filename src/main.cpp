@@ -1,7 +1,6 @@
 #include "main.h"
-#include "config.hpp"
 #include "autons.hpp"
-
+#include "config.hpp"
 
 // ANCHOR runtime variables
 double fwd;
@@ -11,8 +10,7 @@ float down;
 bool hooked = false;
 bool ratcheted = false;
 bool lifted = false;
-
-
+int autoSelector = 0;
 
 void sv() {
   // loop forever
@@ -37,14 +35,79 @@ void initialize() {
   pros::Task sophieVang(sv);
 }
 
-void disabled() {}
+void disabled() {
+  while (true) {
+    if (bumper.get_value() == 1) {
+      autoSelector++;
+      pros::delay(500);
+    }
+    if(autoSelector > 3){
+      autoSelector = 0;
+    }
+    pros::delay(20);
+    switch (autoSelector) {
+    case 0:
+      pros::lcd::print(5, "Close Safe");   
+      break;
+    case 1:
+      pros::lcd::print(5, "Close Disrupt");     
+      break;
+    case 2:
+      pros::lcd::print(5, "Skills");
+      break;
+    case 3:
+      pros::lcd::print(5, "Trust Alliance");
+      break;
+    }
+  }
+}
 
-void competition_initialize() {}
+void competition_initialize() {
+  while (true) {
+    if (bumper.get_value() == 1) {
+      autoSelector++;
+      pros::delay(500);
+    }
+    if (autoSelector > 3) {
+      autoSelector = 0;
+    }
+    pros::delay(20);
+    switch (autoSelector) {
+    case 0:
+      pros::lcd::print(5, "Close Safe");
+      break;
+    case 1:
+      pros::lcd::print(5, "Close Disrupt");
+      break;
+    case 2:
+      pros::lcd::print(5, "Skills");
+      break;
+    case 3:
+      pros::lcd::print(5, "Trust Alliance");
+      break;
+    }
+  }
+}
 
 void autonomous() {
-  closeDisrupt();
-  
-  
+  switch (autoSelector) {
+  case 0:
+    pros::lcd::print(5, "Close Safe");
+    closeSafe();
+    break;
+  case 1:
+    pros::lcd::print(5, "Close Disrupt");
+    closeDisrupt();
+    break;
+  case 2:
+    pros::lcd::print(5, "Skills");
+    skills();
+    break;
+  case 3:
+    pros::lcd::print(5, "Trust Alliance");
+    trustAlliance();
+    break;
+  }
 }
 // ANCHOR opcontrol curve implementation
 void arcadeCurve(pros::controller_analog_e_t power,

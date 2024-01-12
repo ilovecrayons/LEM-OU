@@ -22,22 +22,32 @@ void closeSafe() {
 }
 
 void closeDisrupt() {
-  intake = -30;
-  chassis.setPose(-47.8, -53.9, 0);
-  chassis.moveToPoint(-13.875, -6.346, 5000);
-  chassis.waitUntil(30);
+
+  chassis.setPose(-35, -56.4, 0);
+  intake = -15;
+  pros::delay(500);
+  chassis.turnTo(-33.688, -11.095, 1000);
+  chassis.waitUntilDone();
+  chassis.moveToPoint(-33.688, -11.095, 3000);
+  chassis.waitUntil(35);
+  intake = 120;
+  chassis.turnTo(-9.803, -11.095, 2000);
+  chassis.waitUntilDone();
   left_wing.set_value(true);
-  chassis.waitUntilDone();
-  chassis.turnTo(46, 8, 2000);
-  chassis.waitUntilDone();
-  chassis.turnTo(-46, 8, 2000);
+  chassis.moveToPoint(-7.803, -11.095, 2000);
   chassis.waitUntilDone();
   left_wing.set_value(false);
-  intake = 120;
+  chassis.moveToPoint(-14, -10, 1000, false);
+  chassis.waitUntilDone();
+  /*
+  chassis.turnTo(-46, 20, 2000);
+  chassis.waitUntilDone();
+
   pros::delay(500);
+  */
   chassis.turnTo(-13, -100, 2000);
   chassis.waitUntilDone();
-  chassis.follow(closedisrupt_txt, 15, 5000, true);
+  chassis.follow(closedisrupt_txt, 15, 10000, true);
   chassis.waitUntil(30);
   left_wing.set_value(true);
   chassis.waitUntil(70);

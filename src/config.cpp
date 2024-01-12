@@ -1,5 +1,6 @@
 #include "config.hpp"
 #include "main.h"
+#include "pros/adi.hpp"
 
 // ANCHOR device port configuration
 
@@ -22,6 +23,7 @@ constexpr int INERTIAL_SENSOR_PORT{11};
 #define PTO_PORT 'C'
 #define RATCHET_PORT 'D'
 #define HOOK_PORT 'E'
+#define BUMPER_PORT 'H'
 
 // ANCHOR Robot setup
 
@@ -63,6 +65,9 @@ pros::ADIDigitalOut ratchet(RATCHET_PORT);       // ratchet piston
 pros::Rotation cata_rot(CATA_ROT_PORT, true);    // catapult rotation sensor
 pros::Rotation lift_rot(LIFT_ROT_PORT, false);   // lift rotation sensor
 pros::Imu inertial_sensor(INERTIAL_SENSOR_PORT); // inertial sensor
+
+// auto selecter bumper switch
+pros::ADIDigitalIn bumper(BUMPER_PORT); // bumper sensor
 
 // ANCHOR Chassis class
 lemlib::Drivetrain drivetrain{
