@@ -41,16 +41,16 @@ void disabled() {
       autoSelector++;
       pros::delay(500);
     }
-    if(autoSelector > 3){
+    if (autoSelector > 3) {
       autoSelector = 0;
     }
     pros::delay(20);
     switch (autoSelector) {
     case 0:
-      pros::lcd::print(5, "Close Safe");   
+      pros::lcd::print(5, "Close Safe");
       break;
     case 1:
-      pros::lcd::print(5, "Close Disrupt");     
+      pros::lcd::print(5, "Close Disrupt");
       break;
     case 2:
       pros::lcd::print(5, "Skills");
@@ -134,7 +134,7 @@ void arcadeCurve(pros::controller_analog_e_t power,
 void opcontrol() {
   while (true) { // calls the arcade drive function
     arcadeCurve(pros::E_CONTROLLER_ANALOG_LEFT_Y,
-                pros::E_CONTROLLER_ANALOG_RIGHT_X, master, 10);
+                pros::E_CONTROLLER_ANALOG_RIGHT_X, master, 15);
 
     // intake
     if (master.get_digital(DIGITAL_L1)) // intake
