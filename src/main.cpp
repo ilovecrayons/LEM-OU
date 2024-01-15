@@ -130,7 +130,7 @@ void arcadeCurve(pros::controller_analog_e_t power,
   }
 }
 
-// ANCHOR opctrl
+// ANCHOR opctr
 void opcontrol() {
   while (true) { // calls the arcade drive function
     arcadeCurve(pros::E_CONTROLLER_ANALOG_LEFT_Y,
