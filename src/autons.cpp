@@ -44,8 +44,29 @@ void skills(){
 
 }
 
-void trustAlliance(){
+void trustAlliance() {}
 
-}
+void ace() {
+  chassis.setPose(-47.6, -56.6, 45);
+  hang_piston.set_value(true);
+  chassis.turnTo(-10.9, -10, 1000);
+  chassis.waitUntilDone();
+  front_wings.set_value(true);
+  intake = -120;
+  chassis.moveToPoint(-10.9, -10, 2000);
+  chassis.waitUntil(20);
+  front_wings.set_value(false);
+  chassis.waitUntilDone();
+  chassis.moveToPoint(-44, -53, 2000, false);
+  chassis.waitUntilDone();
+  back_wings.set_value(true);
+  chassis.turnTo(-80, -80, 2000, false);
+  chassis.waitUntilDone();
+  back_wings.set_value(false);
+  chassis.turnTo(-4, -59, 2000);
+  chassis.waitUntilDone();
+  intake = 120;
+  chassis.moveToPoint(-8, -59, 2000);
+
 
 

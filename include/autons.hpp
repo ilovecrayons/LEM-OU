@@ -6,5 +6,6 @@ void closeSafe();
 void closeDisrupt();
 void farRush();
 void skills();
+void ace();
 void trustAlliance();
 
