@@ -3,16 +3,15 @@
 using namespace pros;
 
 // externalize device configurations
-extern Motor intake;
-extern Motor shooter;
-extern ADIDigitalOut right_wing;
-extern ADIDigitalOut left_wing;
-extern ADIDigitalOut pto_piston;
-extern ADIDigitalOut ratchet;
-extern ADIDigitalOut hook;
+
+extern ADIDigitalOut front_wings;
+extern ADIDigitalOut back_wings;
+extern ADIDigitalOut hang_piston;
 
 extern ADIDigitalIn bumper;
 
+extern Motor intake;
+extern Motor shooter;
 extern Motor left_front_motor;
 extern Motor left_middle_motor;
 extern Motor left_back_motor;
@@ -23,12 +22,7 @@ extern Motor right_back_motor;
 extern MotorGroup left_motors;
 extern MotorGroup right_motors;
 
-extern lemlib::ControllerSettings lateralController;
-extern lemlib::ControllerSettings angularController;
 extern lemlib::Chassis chassis;
-
-extern Rotation cata_rot;
-extern Rotation lift_rot;
 
 extern Controller master;
 
@@ -43,13 +37,4 @@ public:
   void control(); // declare the control function
 };
 
-class ptoClass // creates the pto class
-{
-public:
-  bool pto_enable{false};    // pto toggle variable
-  void set_pto(bool toggle); // pto toggle procedure
-  bool pto_override{false};
-};
-
-extern ptoClass pto;  // creates an instance of the pto class object
 extern catapult cata; // creates an instance of the catapult object

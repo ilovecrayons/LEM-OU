@@ -2,26 +2,19 @@
 #include "config.hpp"
 #include "pros/rtos.hpp"
 
-
+constexpr int EARLY_EXIT{0};
+constexpr int MIN_SPEED{0};
 
 ASSET(closesafe1_txt)
 ASSET(closedisrupt_txt)
 void closeSafe() {
 
-  chassis.setPose(-35.5, -55, 0);
-  intake = -100;
-  pros::delay(500);
-  chassis.follow(closesafe1_txt, 6, 10000);
-  chassis.waitUntil(27);
-  left_wing.set_value(true);
-  chassis.waitUntil(65);
-  intake = 120;
-  left_wing.set_value(false);
+
 
 }
 
 void closeDisrupt() {
-
+  /*
   chassis.setPose(-35, -56.4, 0);
   intake = -60;
   
@@ -38,12 +31,9 @@ void closeDisrupt() {
   left_wing.set_value(false);
   chassis.moveToPoint(-14, -10, 1000, false);
   chassis.waitUntilDone();
-  /*
-  chassis.turnTo(-46, 20, 2000);
-  chassis.waitUntilDone();
-
-  pros::delay(500);
-  */
+  
+  
+  
   chassis.turnTo(-13, -100, 2000);
   chassis.waitUntilDone();
   chassis.follow(closedisrupt_txt, 10, 10000, true);
@@ -51,7 +41,7 @@ void closeDisrupt() {
   left_wing.set_value(true);
   chassis.waitUntil(70);
   left_wing.set_value(false);
-
+  */
 
 }
 

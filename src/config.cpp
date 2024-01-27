@@ -14,16 +14,12 @@ constexpr int RIGHT_BACK_PORT{6};
 constexpr int INTAKE_PORT{-14};
 constexpr int SHOOTER_PORT{-12};
 
-constexpr int CATA_ROT_PORT{8};
-constexpr int LIFT_ROT_PORT{20};
 constexpr int INERTIAL_SENSOR_PORT{11};
 
-#define LEFT_WING_PORT 'A'
-#define RIGHT_WING_PORT 'B'
-#define PTO_PORT 'C'
-#define RATCHET_PORT 'D'
-#define HOOK_PORT 'E'
-#define BUMPER_PORT 'H'
+#define FRONT_WINGS_PORT 'A'
+#define BACK_WINGS_PORT 'B'
+#define HANG_PORT 'C'
+#define BUMPER_PORT 'D'
 
 // ANCHOR Robot setup
 
@@ -54,16 +50,13 @@ pros::Motor shooter(SHOOTER_PORT, pros::E_MOTOR_GEAR_RED); // red cartridge, 11W
 
 // Define pneumatics:
 
-pros::ADIDigitalOut left_wing(LEFT_WING_PORT);   // wing mechanism piston
-pros::ADIDigitalOut right_wing(RIGHT_WING_PORT); // wing mechanism piston
-pros::ADIDigitalOut pto_piston(PTO_PORT);        // pto piston
-pros::ADIDigitalOut hook(HOOK_PORT);             // hook piston
-pros::ADIDigitalOut ratchet(RATCHET_PORT);       // ratchet piston
+pros::ADIDigitalOut front_wings(FRONT_WINGS_PORT);   // wing mechanism piston
+pros::ADIDigitalOut back_wings(BACK_WINGS_PORT); // wing mechanism piston
+pros::ADIDigitalOut hang_piston(HANG_PORT);        // hang piston
 
 // Define sensors:
 
-pros::Rotation cata_rot(CATA_ROT_PORT, true);    // catapult rotation sensor
-pros::Rotation lift_rot(LIFT_ROT_PORT, false);   // lift rotation sensor
+
 pros::Imu inertial_sensor(INERTIAL_SENSOR_PORT); // inertial sensor
 
 // auto selecter bumper switch
@@ -73,10 +66,10 @@ pros::ADIDigitalIn bumper(BUMPER_PORT); // bumper sensor
 lemlib::Drivetrain drivetrain{
     &left_motors,  // left drivetrain motors
     &right_motors, // right drivetrain motors
-    11.25,         // track width
+    11.125,         // track width
     3.25,          // wheel diameter
-    360,           // wheel rpm
-    2              // chase power
+    450,           // wheel rpm
+    1.5              // chase power
 };
 
 lemlib::OdomSensors sensors{nullptr, nullptr, nullptr, nullptr,
@@ -109,68 +102,10 @@ lemlib::ControllerSettings angularController{
 lemlib::Chassis chassis(drivetrain, lateralController, angularController,
                         sensors);
 
-/**
- * ANCHOR toggle pto procedure
- * @param bool toggle
- * sets the pto state with given parameter
- */
-void ptoClass::set_pto(bool toggle) {
-  pto_enable = toggle; // sets the global state variable to the desired state
-
-  if (toggle) // if the pto is desired to be raised
-  {
-
-    pto_piston.set_value(toggle); // actuate both pto pistons
-    left_motors[2] = 30;          // spin pto motors to allow gear mesh
-    right_motors[2] = 30;
-    pros::delay(200);
-    left_motors[2] = 0;
-    right_motors[2] = 0;
-    right_motors[2].set_brake_mode(
-        E_MOTOR_BRAKE_HOLD); // sets both motors to hold
-    left_motors[2].set_brake_mode(E_MOTOR_BRAKE_HOLD);
-    while (lift_rot.get_position() < 9900 &&
-           !pto_override) // continuously spins motors until the pto is raised
-                          // to 99 degrees
-    {
-      left_motors[2] = 120;
-      right_motors[2] = 120;
-    }
-    right_motors[2] = 0;
-    left_motors[2] = 0;
-  } else if (!toggle) { // if the pto is desired to be lowerd
-    right_motors[2].set_brake_mode(
-        E_MOTOR_BRAKE_HOLD); // disable hold from both motors
-    left_motors[2].set_brake_mode(E_MOTOR_BRAKE_HOLD);
-    while (lift_rot.get_position() > 500 &&
-           !pto_override) { // continuously spins the pto motors in reverse
-                            // until thje pto is lowered to 15 degrees
-      left_motors[2] = -120;
-      right_motors[2] = -120;
-    }
-    right_motors[2] = 0;
-    left_motors[2] = 0;
-    if (!pto_override) {
-      pto_piston.set_value(toggle); // shift the pto pistons back to drive state
-      right_motors[2].set_brake_mode(
-          E_MOTOR_BRAKE_COAST); // disable hold from both motors
-      left_motors[2].set_brake_mode(E_MOTOR_BRAKE_COAST);
-      left_motors[2] = -30; // spin both pto motors to mesh with drive
-      right_motors[2] = -30;
-    }
-
-    pros::delay(200);
-    right_motors[2] = 0;
-    left_motors[2] = 0;
-  }
-  master.rumble("-"); // vibrates the controller to signal the driver that the
-                      // state change has finished
-}
 
 // ANCHOR catapult control
 void catapult::lower() { // catapult reset function
-  while (cata_rot.get_position() <
-         4000) {   // executes while catapult is not at the desired angle
+  while (shooter.get_power() < 10) {   // executes while catapult is not at the desired angle
     shooter = 127; // outputs power to the catapult motor
     pros::delay(10);
   }
@@ -182,7 +117,7 @@ void catapult::lower() { // catapult reset function
 void catapult::control() {
   shooter.set_brake_mode(E_MOTOR_BRAKE_HOLD);
   while (true) {
-    if (cata_rot.get_position() < 1000 && cata.state != 1 &&
+    if (shooter.get_power() < 4 && cata.state != 1 &&
         cata.state != 3) // checks if the catapult should be lowered
     {
       cata.state = 1;
@@ -197,4 +132,3 @@ void catapult::control() {
 }
 
 catapult cata; // creates an instance of the catapult object
-ptoClass pto;  // creates an instance of the pto object
