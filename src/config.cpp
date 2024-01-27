@@ -1,20 +1,21 @@
 #include "config.hpp"
+#include "lemlib/chassis/chassis.hpp"
 #include "main.h"
 #include "pros/adi.hpp"
 
 // ANCHOR device port configuration
 
-constexpr int LEFT_FRONT_PORT{-4};
-constexpr int LEFT_MIDDLE_PORT{-2};
-constexpr int LEFT_BACK_PORT{-3};
-constexpr int RIGHT_FRONT_PORT{17};
-constexpr int RIGHT_MIDDLE_PORT{5};
-constexpr int RIGHT_BACK_PORT{6};
+constexpr int LEFT_FRONT_PORT{-2};
+constexpr int LEFT_MIDDLE_PORT{-11};
+constexpr int LEFT_BACK_PORT{-13};
+constexpr int RIGHT_FRONT_PORT{9};
+constexpr int RIGHT_MIDDLE_PORT{20};
+constexpr int RIGHT_BACK_PORT{17};
 
-constexpr int INTAKE_PORT{-14};
-constexpr int SHOOTER_PORT{-12};
+constexpr int INTAKE_PORT{-1};
+constexpr int SHOOTER_PORT{-18};
 
-constexpr int INERTIAL_SENSOR_PORT{11};
+constexpr int INERTIAL_SENSOR_PORT{6};
 
 #define FRONT_WINGS_PORT 'A'
 #define BACK_WINGS_PORT 'B'
@@ -97,6 +98,10 @@ lemlib::ControllerSettings angularController{
     2,   // big error range
     200, // big error timeout
     0    // slew
+};
+
+lemlib::MoveToPoseParams moveToPoseParams{
+  true, 0, 0.6, 127, 0, 0
 };
 
 lemlib::Chassis chassis(drivetrain, lateralController, angularController,

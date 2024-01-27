@@ -8,7 +8,7 @@ double turning;
 float up;
 float down;
 bool lifted = true;
-int autoSelector = 3;
+int autoSelector = 0;
 
 void sv() {
   // loop forever
@@ -22,9 +22,40 @@ void sv() {
   }
 }
 
+void autonSelector() {
+  
+  
+  autoSelector++;
+    
+  
+  if (autoSelector > 3) {
+    autoSelector = 0;
+  }
+}
+
+void callSelectedAuton() {
+  while (true) {
+    switch (autoSelector) {
+    case 0:
+      pros::lcd::print(5, "Close Safe");
+      break;
+    case 1:
+      pros::lcd::print(5, "Close Disrupt");
+      break;
+    case 2:
+      pros::lcd::print(5, "Skills");
+      break;
+    case 3:
+      pros::lcd::print(5, "Trust Alliance");
+      break;
+    }
+    pros::delay(20);
+  }
+}
+
 void initialize() {
-  hang_piston.set_value(true);
   pros::lcd::initialize();
+  pros::lcd::register_btn1_cb(autonSelector);
   chassis.calibrate();
   pros::Task continuous{[=] { // creates a lambda task for catapult control
     cata.control();
@@ -33,60 +64,16 @@ void initialize() {
 }
 
 void disabled() {
-  while (true) {
-    if (bumper.get_value() == 1) {
-      autoSelector++;
-      pros::delay(500);
-    }
-    if (autoSelector > 3) {
-      autoSelector = 0;
-    }
-    pros::delay(20);
-    switch (autoSelector) {
-    case 0:
-      pros::lcd::print(5, "Close Safe");
-      break;
-    case 1:
-      pros::lcd::print(5, "Close Disrupt");
-      break;
-    case 2:
-      pros::lcd::print(5, "Skills");
-      break;
-    case 3:
-      pros::lcd::print(5, "Trust Alliance");
-      break;
-    }
-  }
+  callSelectedAuton();
 }
 
 void competition_initialize() {
-  while (true) {
-    if (bumper.get_value() == 1) {
-      autoSelector++;
-      pros::delay(500);
-    }
-    if (autoSelector > 3) {
-      autoSelector = 0;
-    }
-    pros::delay(20);
-    switch (autoSelector) {
-    case 0:
-      pros::lcd::print(5, "Close Safe");
-      break;
-    case 1:
-      pros::lcd::print(5, "Close Disrupt");
-      break;
-    case 2:
-      pros::lcd::print(5, "Skills");
-      break;
-    case 3:
-      pros::lcd::print(5, "Trust Alliance");
-      break;
-    }
-  }
+  callSelectedAuton();
 }
 
 void autonomous() {
+  hang_piston.set_value(true);
+  lifted = false;
   switch (autoSelector) {
   case 0:
     pros::lcd::print(5, "Close Safe");
@@ -118,11 +105,22 @@ void arcadeCurve(pros::controller_analog_e_t power,
   right_motors = (fwd + turning);
 }
 
+void timer() {
+  pros::delay(75000);
+  master.rumble("-.-.-");
+  pros::delay(10000);
+  master.rumble("-.-");
+  pros::delay(10000);
+  master.rumble("...");
+  
+}
+
 // ANCHOR opctrl
 void opcontrol() {
+  pros::Task timerTask(timer);
   while (true) { // calls the arcade drive function
     arcadeCurve(pros::E_CONTROLLER_ANALOG_LEFT_Y,
-                pros::E_CONTROLLER_ANALOG_RIGHT_X, master, 15);
+                pros::E_CONTROLLER_ANALOG_RIGHT_X, master, 10);
 
     // intake
     if (master.get_digital(DIGITAL_L1)) // intake
@@ -140,12 +138,20 @@ void opcontrol() {
     }
 
     // wing
-    if (master.get_digital(DIGITAL_R1)) // wing retract
+    if (master.get_digital(DIGITAL_R1)) // wing expand
     {
       front_wings.set_value(true);
-    } else if (!master.get_digital(DIGITAL_R1)) // wing expand
+    } else if (!master.get_digital(DIGITAL_R1)) // wing retract
     {
-      front_wings.set_value(true);
+      front_wings.set_value(false);
+    }
+
+    if (master.get_digital(DIGITAL_R2)) // wing expand
+    {
+      back_wings.set_value(true);
+    } else if (!master.get_digital(DIGITAL_R2)) // wing retract
+    {
+      back_wings.set_value(false);
     }
 
     // catapult
@@ -167,10 +173,10 @@ void opcontrol() {
       pros::delay(300);
     }
     if (lifted) {
-      hang_piston.set_value(true);
+      hang_piston.set_value(false);
     }
     if (!lifted) {
-      hang_piston.set_value(false);
+      hang_piston.set_value(true);
     }
 
     pros::delay(20);
