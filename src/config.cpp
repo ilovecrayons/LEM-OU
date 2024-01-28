@@ -110,7 +110,7 @@ lemlib::Chassis chassis(drivetrain, lateralController, angularController,
 
 // ANCHOR catapult control
 void catapult::lower() { // catapult reset function
-  while (shooter.get_power() < 10) {   // executes while catapult is not at the desired angle
+  while (shooter.get_efficiency() > 30) {   // executes while catapult is not at the desired angle
     shooter = 127; // outputs power to the catapult motor
     pros::delay(10);
   }
@@ -120,17 +120,19 @@ void catapult::lower() { // catapult reset function
 
 // ANCHOR async cata implementation
 void catapult::control() {
-  shooter.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+  shooter.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
   while (true) {
-    if (shooter.get_power() < 4 && cata.state != 1 &&
-        cata.state != 3) // checks if the catapult should be lowered
-    {
-      cata.state = 1;
-      cata.lower();
-    }
+    //if (shooter.get_efficiency() > 30 && cata.state != 1 && cata.state != 3) // checks if the catapult should be lowered
+    //{
+    //  cata.state = 1;
+    //  cata.lower();
+    //}
     if (cata.state == 3) // if cata is set to continuous
     {
-      shooter = 127;
+      shooter = 100;
+    }
+    if (cata.state == 0) {
+      shooter = 0;
     }
     pros::delay(15);
   }

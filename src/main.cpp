@@ -8,7 +8,7 @@ double turning;
 float up;
 float down;
 bool lifted = true;
-int autoSelector = 0;
+int autoSelector = 2;
 
 void sv() {
   // loop forever
@@ -28,7 +28,7 @@ void autonSelector() {
   autoSelector++;
     
   
-  if (autoSelector > 3) {
+  if (autoSelector > 4) {
     autoSelector = 0;
   }
 }
@@ -48,6 +48,8 @@ void callSelectedAuton() {
     case 3:
       pros::lcd::print(5, "Trust Alliance");
       break;
+    case 4:
+      pros::lcd::print(5, "ace");
     }
     pros::delay(20);
   }
@@ -88,8 +90,12 @@ void autonomous() {
     skills();
     break;
   case 3:
-    pros::lcd::print(5, "Trust Alliance");
+    
     trustAlliance();
+    break;
+  case 4:
+    pros::lcd::print(5, "ace");
+    ace();
     break;
   }
 }
