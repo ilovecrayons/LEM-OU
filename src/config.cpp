@@ -67,7 +67,7 @@ pros::ADIDigitalIn bumper(BUMPER_PORT); // bumper sensor
 lemlib::Drivetrain drivetrain{
     &left_motors,  // left drivetrain motors
     &right_motors, // right drivetrain motors
-    11.125,         // track width
+    11.000,         // track width
     3.25,          // wheel diameter
     450,           // wheel rpm
     1.5              // chase power
@@ -77,26 +77,26 @@ lemlib::OdomSensors sensors{nullptr, nullptr, nullptr, nullptr,
                             &inertial_sensor};
 
 lemlib::ControllerSettings lateralController{
-    14,  // kp
+    10,  // kp
     0,   // ki
-    21,  // kd
+    20,  // kd
     0,   // windup range
     1,   // small error range
     100, // small timeout
     3,   // big error range
     500, // big error timeout
-    15    // slew
+    20    // slew
 };
 
 lemlib::ControllerSettings angularController{
-    2,   // kp
-    0.2, // ki
-    12,  // kd
-    10,  // windup range
+    2.3,   // kp
+    0.3, // ki
+    13.5,  // kd
+    5,  // windup range
     1,   // small error range
     50,  // small timeout
-    2,   // big error range
-    200, // big error timeout
+    3,   // big error range
+    500, // big error timeout
     0    // slew
 };
 

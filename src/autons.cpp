@@ -81,29 +81,50 @@ void skills(){
   chassis.moveToPoint(4.171, -26.537, 2000);
 }
 
-void trustAlliance() {}
+void trustAlliance() {
+  /*
+  chassis.setPose(0, 0, 0);
+  chassis.moveToPoint(0, 24, 5000);
+  chassis.waitUntilDone();
+  chassis.moveToPoint(0, 0, 5000, false);
+  chassis.waitUntilDone();
+
+
+  chassis.turnTo(45, 45, 5000);
+  chassis.turnTo(-45, -45, 5000);
+  chassis.turnTo(0, 10, 5000);
+  chassis.turnTo(45, 45, 5000);
+  chassis.turnTo(-45, -45, 5000);
+  chassis.turnTo(0, 10, 5000);
+  */
+}
 
 void ace() {
   chassis.setPose(-47.6, -56.6, 45);
   hang_piston.set_value(true);
-  chassis.turnTo(-10.9, -10, 1000);
-  chassis.waitUntilDone();
+  //chassis.turnTo(-10.9, -10, 2000);
+  //chassis.waitUntilDone();
   front_wings.set_value(true);
   intake = -120;
-  chassis.moveToPoint(-10.9, -10, 2000);
+  //chassis.moveToPoint(-10.9, -10, 2000);
+  chassis.moveToPose(-10.9, -10, 45, 2000);
   chassis.waitUntil(20);
   front_wings.set_value(false);
   chassis.waitUntilDone();
-  chassis.moveToPoint(-44, -53, 2000, false);
+  chassis.turnTo(-43,-54,2000, false);
+  chassis.moveToPoint(-43, -54, 2000, false);
   chassis.waitUntilDone();
   back_wings.set_value(true);
-  chassis.turnTo(-80, -80, 2000, false);
+  chassis.turnTo(-102, -98, 2000, true);
   chassis.waitUntilDone();
   back_wings.set_value(false);
-  chassis.turnTo(-4, -59, 2000);
+  chassis.turnTo(-29, -60, 2000);
+  chassis.moveToPoint(-29, -60, 2000);
   chassis.waitUntilDone();
   intake = 120;
-  chassis.moveToPoint(-8, -59, 2000);
+  chassis.turnTo(-8, -62, 2000);
+  chassis.moveToPoint(-8, -62, 2000);
 }
+
 
 

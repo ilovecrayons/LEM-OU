@@ -8,7 +8,7 @@ double turning;
 float up;
 float down;
 bool lifted = true;
-int autoSelector = 2;
+int autoSelector = 4;
 
 void sv() {
   // loop forever
