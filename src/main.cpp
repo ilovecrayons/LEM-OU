@@ -8,7 +8,7 @@ double turning;
 float up;
 float down;
 bool lifted = true;
-int autoSelector = 4;
+int autoSelector = 0;
 
 void sv() {
   // loop forever
@@ -49,7 +49,7 @@ void callSelectedAuton() {
       pros::lcd::print(5, "Trust Alliance");
       break;
     case 4:
-      pros::lcd::print(5, "ace");
+      pros::lcd::print(5, "far rush");
     }
     pros::delay(20);
   }
@@ -90,12 +90,12 @@ void autonomous() {
     skills();
     break;
   case 3:
-    
+    pros::lcd::print(5, "Trust Alliance");
     trustAlliance();
     break;
   case 4:
-    pros::lcd::print(5, "ace");
-    ace();
+    pros::lcd::print(5, "far rush");
+    farRush();
     break;
   }
 }
@@ -124,6 +124,9 @@ void timer() {
 // ANCHOR opctrl
 void opcontrol() {
   pros::Task timerTask(timer);
+  if (autoSelector == 2) {
+    driverStart();
+  }
   while (true) { // calls the arcade drive function
     arcadeCurve(pros::E_CONTROLLER_ANALOG_LEFT_Y,
                 pros::E_CONTROLLER_ANALOG_RIGHT_X, master, 10);

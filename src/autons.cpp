@@ -1,6 +1,7 @@
-#include "main.h"
 #include "config.hpp"
+#include "main.h"
 #include "pros/rtos.hpp"
+
 
 constexpr int EARLY_EXIT{0};
 constexpr int MIN_SPEED{0};
@@ -10,67 +11,99 @@ ASSET(closedisrupt_txt)
 void closeSafe() {
   chassis.setPose(-46.451, -57.626, 135);
   hang_piston.set_value(true);
+  pros::delay(2000);
+  hang_piston.set_value(false);
   back_wings.set_value(true);
   pros::delay(500);
   intake = 120;
-  chassis.turnTo(-8, -60, 1000);
-  chassis.waitUntilDone();
-  chassis.moveToPoint(-9, -60, 3000, true);
-  chassis.waitUntil(8);
+  chassis.turnTo(-55, -9, 1000);
+  chassis.waitUntil(45);
   back_wings.set_value(false);
-
+  chassis.turnTo(-30, -61, 1000);
+  chassis.waitUntilDone();
+  chassis.moveToPoint(-30, -61, 3000, true);
+  chassis.turnTo(-8, -61, 1000);
+  chassis.waitUntilDone();
+  pros::delay(6000);
+  chassis.moveToPoint(-10.7, -61, 3000, true);
 }
 
 void closeDisrupt() {
-  
   chassis.setPose(-35, -55.4, 0);
   hang_piston.set_value(true);
-  //chassis.turnTo(-25.994, -9, 1000);
-  chassis.moveToPoint(-25.994, -14.075, 2000);
+  // chassis.turnTo(-24.994, -11, 1000);
   intake = -120;
-  chassis.waitUntilDone();
-  chassis.moveToPoint(-25, -12, 2000, false);
+  front_wings.set_value(true);
+  chassis.moveToPoint(-24.994, -11.075, 2000);
+  chassis.waitUntil(45);
+  hang_piston.set_value(false);
+  front_wings.set_value(false);
+  chassis.moveToPoint(-27, -13.5, 2000, false);
   chassis.waitUntilDone();
   chassis.turnTo(-5.8, -12, 2000);
   chassis.waitUntilDone();
   front_wings.set_value(true);
-  chassis.moveToPoint(-5.81, -12, 2000);
+  chassis.moveToPoint(-3, -12, 2000);
   chassis.waitUntilDone();
   front_wings.set_value(false);
-  chassis.moveToPoint(-31, -63, 5000, false, 80);
-  }
+  chassis.turnTo(-54, -56, 2000, false);
+  chassis.moveToPoint(-48, -51, 2000, false, 80);
+  chassis.waitUntilDone();
+  chassis.turnTo(20, -80, 2000);
+  chassis.waitUntilDone();
 
-void skills(){
-  
+  intake = 120;
+}
+
+void skills() {
+
   hang_piston.set_value(true);
-  chassis.setPose(-47, -54, 0);
-  chassis.turnTo(47, 1, 2000);
+  chassis.setPose(-38, -58, 90);
+  chassis.turnTo(-56, -41, 2000, false);
+  chassis.moveToPoint(-56, -41, 2000, false);
+  chassis.turnTo(46, -3, 2000);
+  hang_piston.set_value(false);
+  chassis.waitUntilDone();
   back_wings.set_value(true);
   cata.state = 3;
-  //pros::delay(30000);
+  pros::delay(30000);
   cata.state = 0;
   back_wings.set_value(false);
-  chassis.turnTo(-4, -59, 2000, false);
-  chassis.moveToPoint(-4.805, -59.328, 2000, false);
-  chassis.turnTo(42, -56, 2000, false);
-  chassis.moveToPoint(42.122, -56.997, 2000, false);
-  chassis.turnTo(59.4, -45.081, 2000, false);
-  chassis.moveToPoint(59.4, -45.081, 2000, false);
-  chassis.turnTo(59.599, -30.582, 2000, false);
-  chassis.moveToPoint(59.599, -30.582, 2000, false);
-  chassis.moveToPoint(59.599, -45.478, 2000);
-  chassis.turnTo(10.328, -29.714, 2000);
-  chassis.moveToPoint(10.328, -29.714, 2000);
-  chassis.turnTo(10.725, -17.599, 2000);
-  chassis.moveToPoint(10.725, -17.599, 2000);
-  chassis.turnTo(39.126, -15.017, 2000, false);
-  chassis.moveToPoint(39.126, -15.017, 2000, false);
-  chassis.turnTo(8.541, -2.307, 2000);
-  chassis.moveToPoint(8.541, -2.307, 2000);
-  chassis.moveToPoint(38.531, -1.115, 2000, false);
-  chassis.turnTo(7.746, 13.185, 2000);
-  chassis.moveToPoint(7.746, 13.185, 2000);
-  chassis.moveToPoint(38.729, 12.39, 2000, false);
+  chassis.turnTo(-58, -30, 2000, false);
+  chassis.moveToPoint(-58, -28.5, 2000, false);
+  chassis.moveToPoint(-56, -41, 2000);
+  chassis.turnTo(-38, -59.5, 2000, false);
+  chassis.moveToPoint(-38, -59.5, 2000, false);
+  chassis.turnTo(39, -59.5, 2000, false);
+  chassis.moveToPoint(39, -59.5, 2000, false);
+  chassis.turnTo(63, -43, 2000, false);
+  chassis.moveToPoint(63, -43, 2000, false);
+  chassis.turnTo(63, -29, 2000, false);
+  chassis.moveToPoint(63, -29.582, 2000, false);
+  chassis.moveToPoint(63, -45.478, 2000);
+  chassis.turnTo(15.328, -29.714, 2000);
+  chassis.moveToPoint(15.328, -29.714, 2000);
+  chassis.turnTo(15.725, -20, 2000);
+  chassis.moveToPoint(15.725, -20, 2000);
+  chassis.turnTo(39.126, -20, 2000, false);
+  back_wings.set_value(true);
+  chassis.moveToPoint(39.126, -20, 2000, false);
+  chassis.moveToPoint(13.725, -20, 2000);
+  chassis.waitUntil(5);
+  back_wings.set_value(false);
+  chassis.turnTo(13, 10, 2000);
+  chassis.moveToPoint(13, 10.115, 2000);
+  chassis.turnTo(39, 10.185, 2000, false);
+  back_wings.set_value(true);
+  chassis.moveToPoint(39, 10, 2000, false);
+  chassis.moveToPoint(13, 10.115, 2000);
+  chassis.waitUntil(5);
+  back_wings.set_value(false);
+  /*
+  chassis.turnTo(38.729, -25, 2000, false);
+  back_wings.set_value(true);
+  chassis.moveToPoint(38.729, -25, 2000, false);
+
   chassis.turnTo(8.739, 5.638, 2000);
   chassis.moveToPoint(8.739, 5.638, 2000);
   back_wings.set_value(true);
@@ -79,6 +112,7 @@ void skills(){
   chassis.moveToPoint(4.171, -26.537, 2000);
   chassis.moveToPoint(44.489, -10.648, 2000, false);
   chassis.moveToPoint(4.171, -26.537, 2000);
+*/
 }
 
 void trustAlliance() {
@@ -100,31 +134,68 @@ void trustAlliance() {
 }
 
 void ace() {
-  chassis.setPose(-47.6, -56.6, 45);
+  chassis.setPose(-47.6, -56.6, 38);
   hang_piston.set_value(true);
-  //chassis.turnTo(-10.9, -10, 2000);
-  //chassis.waitUntilDone();
+  // chassis.turnTo(-10.9, -10, 2000);
+  // chassis.waitUntilDone();
   front_wings.set_value(true);
   intake = -120;
-  //chassis.moveToPoint(-10.9, -10, 2000);
-  chassis.moveToPose(-10.9, -10, 45, 2000);
+  chassis.moveToPoint(-10.9, -10, 2000);
   chassis.waitUntil(20);
   front_wings.set_value(false);
   chassis.waitUntilDone();
-  chassis.turnTo(-43,-54,2000, false);
-  chassis.moveToPoint(-43, -54, 2000, false);
+  chassis.moveToPoint(-45, -55, 2000, false);
   chassis.waitUntilDone();
   back_wings.set_value(true);
-  chassis.turnTo(-102, -98, 2000, true);
+  chassis.turnTo(-93, -76, 2000, true, 80);
   chassis.waitUntilDone();
   back_wings.set_value(false);
-  chassis.turnTo(-29, -60, 2000);
-  chassis.moveToPoint(-29, -60, 2000);
-  chassis.waitUntilDone();
   intake = 120;
-  chassis.turnTo(-8, -62, 2000);
-  chassis.moveToPoint(-8, -62, 2000);
+  chassis.turnTo(-29, -65, 2000);
+  chassis.moveToPoint(-29, -60, 2000);
+
+  chassis.moveToPoint(-8, -70, 2000);
 }
 
+void farRush() {
+  chassis.setPose(35.6, -55.8, 0);
+  hang_piston.set_value(true);
+  chassis.moveToPoint(29.462, -19.234, 2000);
+  chassis.turnTo(11, -6, 2000);
+  intake = -120;
+  chassis.moveToPoint(11.044, -6.501, 2000);
+  hang_piston.set_value(false);
+  chassis.turnTo(40, -6, 2000, true);
+  front_wings.set_value(true);
+  chassis.moveToPoint(40.149, -6.273, 2000, true);
+  intake = 120;
+  chassis.turnTo(11, -20, 2000);
+  front_wings.set_value(false);
+  chassis.moveToPoint(11.271, -20.826, 2000);
+  intake = -120;
+  chassis.turnTo(46, -54, 2000);
+  chassis.moveToPoint(46.743, -54.251, 2000);
+  chassis.turnTo(57, -45, 2000, false);
+  chassis.moveToPoint(57.885, -45.838, 2000, false);
+  back_wings.set_value(true);
+  chassis.turnTo(58, -29, 2000, false);
+  chassis.moveToPoint(58.794, -29.466, 2000, false);
+  pros::delay(500);
+  back_wings.set_value(false);
+}
 
-
+void driverStart() {
+  hang_piston.set_value(true);
+  chassis.setPose(-38, -58, 90);
+  chassis.turnTo(-56, -41, 2000, false);
+  chassis.moveToPoint(-56, -41, 2000, false);
+  chassis.turnTo(46, -3, 2000);
+  hang_piston.set_value(false);
+  chassis.waitUntilDone();
+  back_wings.set_value(true);
+  cata.state = 3;
+  pros::delay(30000);
+  master.rumble("-.");
+  cata.state = 0;
+  back_wings.set_value(false);
+}

@@ -2,6 +2,7 @@
 #include "lemlib/chassis/chassis.hpp"
 #include "main.h"
 #include "pros/adi.hpp"
+#include "pros/motors.h"
 
 // ANCHOR device port configuration
 
@@ -110,8 +111,8 @@ lemlib::Chassis chassis(drivetrain, lateralController, angularController,
 
 // ANCHOR catapult control
 void catapult::lower() { // catapult reset function
-  while (shooter.get_efficiency() > 30) {   // executes while catapult is not at the desired angle
-    shooter = 127; // outputs power to the catapult motor
+  while ((int)shooter.get_position() % 180 < 150 ) {   // executes while catapult is not at the desired angle
+    shooter = 113; // outputs power to the catapult motor
     pros::delay(10);
   }
   shooter.brake(); // stops the catapult motor
@@ -120,21 +121,26 @@ void catapult::lower() { // catapult reset function
 
 // ANCHOR async cata implementation
 void catapult::control() {
-  shooter.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+  shooter.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
+  shooter.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+  shooter = 0;
   while (true) {
-    //if (shooter.get_efficiency() > 30 && cata.state != 1 && cata.state != 3) // checks if the catapult should be lowered
-    //{
-    //  cata.state = 1;
-    //  cata.lower();
-    //}
+    
+    if ((int) shooter.get_position() % 180 < 150 && cata.state != 1 && cata.state != 3) // checks if the catapult should be lowered
+    {
+      cata.state = 1;
+      cata.lower();
+    }
+    
     if (cata.state == 3) // if cata is set to continuous
     {
-      shooter = 100;
+      shooter = 105;
     }
     if (cata.state == 0) {
       shooter = 0;
     }
     pros::delay(15);
+    //master.print(1, 1, "efficiency %f", shooter.get_position());
   }
 }
 

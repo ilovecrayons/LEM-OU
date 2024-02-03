@@ -8,4 +8,6 @@ void farRush();
 void skills();
 void ace();
 void trustAlliance();
+void driverStart();
+void farRush();
 
