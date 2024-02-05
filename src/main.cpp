@@ -23,11 +23,9 @@ void sv() {
 }
 
 void autonSelector() {
-  
-  
+
   autoSelector++;
-    
-  
+
   if (autoSelector > 4) {
     autoSelector = 0;
   }
@@ -65,17 +63,13 @@ void initialize() {
   pros::Task sophieVang(sv);
 }
 
-void disabled() {
-  callSelectedAuton();
-}
+void disabled() { callSelectedAuton(); }
 
-void competition_initialize() {
-  callSelectedAuton();
-}
+void competition_initialize() { callSelectedAuton(); }
 
 void autonomous() {
   hang_piston.set_value(true);
-  lifted = false;
+  lifted = true;
   switch (autoSelector) {
   case 0:
     pros::lcd::print(5, "Close Safe");
@@ -118,7 +112,6 @@ void timer() {
   master.rumble("-.-");
   pros::delay(10000);
   master.rumble("...");
-  
 }
 
 // ANCHOR opctrl

@@ -134,7 +134,7 @@ void catapult::control() {
     
     if (cata.state == 3) // if cata is set to continuous
     {
-      shooter = 105;
+      shooter = 110;
     }
     if (cata.state == 0) {
       shooter = 0;
