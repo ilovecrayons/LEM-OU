@@ -9,4 +9,5 @@ void ace();
 void trustAlliance();
 void driverStart();
 void farRush();
-
+void default_constants();
+void exit_condition_defaults();

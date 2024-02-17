@@ -7,8 +7,8 @@ double fwd;
 double turning;
 float up;
 float down;
-bool lifted = true;
-int autoSelector = 0;
+bool lifted = false;
+int autoSelector = 4;
 
 void sv() {
   // loop forever
@@ -54,9 +54,17 @@ void callSelectedAuton() {
 }
 
 void initialize() {
+  ez::print_ez_template();
+  pros::delay(500);
+  easy.toggle_modify_curve_with_controller(false);
+  easy.set_active_brake(0);
+  easy.set_curve_default(0, 0);
+  default_constants();
+  exit_condition_defaults();
   pros::lcd::initialize();
   pros::lcd::register_btn1_cb(autonSelector);
-  lem.calibrate();
+  easy.initialize();
+  lem.calibrate(false);
   pros::Task continuous{[=] { // creates a lambda task for catapult control
     cata.control();
   }};
@@ -68,8 +76,11 @@ void disabled() { callSelectedAuton(); }
 void competition_initialize() { callSelectedAuton(); }
 
 void autonomous() {
-  hang_piston.set_value(true);
-  lifted = true;
+  pros::delay(1000);
+  easy.reset_pid_targets();  // Resets PID targets to 0
+  easy.reset_gyro();         // Reset gyro position to 0
+  easy.reset_drive_sensor(); // Reset drive sensors to 0
+  easy.set_drive_brake(MOTOR_BRAKE_HOLD);
   switch (autoSelector) {
   case 0:
     pros::lcd::print(5, "Close Safe");

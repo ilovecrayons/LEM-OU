@@ -6,19 +6,19 @@
 
 // ANCHOR device port configuration
 
-constexpr int LEFT_FRONT_PORT{-2};
-constexpr int LEFT_MIDDLE_PORT{-11};
-constexpr int LEFT_BACK_PORT{-13};
-constexpr int RIGHT_FRONT_PORT{9};
-constexpr int RIGHT_MIDDLE_PORT{20};
-constexpr int RIGHT_BACK_PORT{17};
+constexpr int LEFT_FRONT_PORT{-13};
+constexpr int LEFT_MIDDLE_PORT{-12};
+constexpr int LEFT_BACK_PORT{-11};
+constexpr int RIGHT_FRONT_PORT{18};
+constexpr int RIGHT_MIDDLE_PORT{19};
+constexpr int RIGHT_BACK_PORT{20};
 
-constexpr int INTAKE_PORT{-1};
-constexpr int SHOOTER_PORT{-18};
+constexpr int INTAKE_PORT{-21};
+constexpr int SHOOTER_PORT{-15};
 
-constexpr int INERTIAL_SENSOR_PORT{6};
+constexpr int INERTIAL_SENSOR_PORT{16};
 
-#define FRONT_WINGS_PORT 'A'
+#define FRONT_WINGS_PORT 'E'
 #define BACK_WINGS_PORT 'B'
 #define HANG_PORT 'C'
 #define BUMPER_PORT 'D'
@@ -84,7 +84,7 @@ Drive easy(
 
     // Cartridge RPM
     ,
-    450
+    600
 
     // External Gear Ratio
     ,

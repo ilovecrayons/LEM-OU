@@ -21,14 +21,13 @@ void default_constants() {
 void exit_condition_defaults() {
   easy.set_exit_condition(easy.turn_exit, 35, 1, 150, 3, 250, 500);
   easy.set_exit_condition(easy.swing_exit, 50, 2, 250, 5, 250, 500);
-  easy.set_exit_condition(easy.drive_exit, 35, 30, 150, 150, 250, 500);
+  easy.set_exit_condition(easy.drive_exit, 35, 2, 150, 3, 250, 500);
 }
 
 void closeSafe() {
   lem.setPose(-46.451, -57.626, 135);
-  hang_piston.set_value(true);
+  intake = -120;
   pros::delay(2000);
-  hang_piston.set_value(false);
   back_wings.set_value(true);
   pros::delay(500);
   intake = 120;
@@ -46,12 +45,10 @@ void closeSafe() {
 
 void closeDisrupt() {
   lem.setPose(-35, -55.4, 0);
-  // hang_piston.set_value(true);
   intake = -120;
   front_wings.set_value(true);
   lem.moveToPoint(-24.994, -11.075, 2000);
   lem.waitUntil(45);
-  // hang_piston.set_value(false);
   front_wings.set_value(false);
   lem.moveToPoint(-27, -13.5, 2000, false);
   lem.waitUntilDone();
@@ -71,13 +68,11 @@ void closeDisrupt() {
 }
 
 void skills() {
-
-  hang_piston.set_value(true);
+  intake = -120;
   lem.setPose(-38, -58, 90);
   lem.turnTo(-56, -41, 2000, false);
   lem.moveToPoint(-56, -41, 2000, false);
   lem.turnTo(46, -3, 2000);
-  hang_piston.set_value(false);
   lem.waitUntilDone();
   back_wings.set_value(true);
   cata.state = 3;
@@ -141,6 +136,15 @@ void trustAlliance() {
 }
 
 void farSafe() {
+  easy.set_drive_pid(37, 100);
+  easy.wait_drive();
+  easy.set_drive_pid(37, 100);
+  easy.wait_drive();
+  easy.set_drive_pid(37, 100);
+  easy.wait_drive();
+  easy.set_drive_pid(37, 100);
+  easy.wait_drive();
+  return;
   intake = -120;
   easy.set_drive_pid(5.5, 100);
   easy.wait_drive();
@@ -155,8 +159,7 @@ void farSafe() {
   easy.wait_drive();
   back_wings.set_value(false);
 
-
-  easy.set_drive_pid(-17, 127);
+  easy.set_drive_pid(-17, 120);
   easy.wait_drive();
   easy.set_drive_pid(20, 120);
   easy.wait_drive();
@@ -179,17 +182,16 @@ void farSafe() {
   easy.wait_drive();
   intake = 120;
   // wings
-  easy.set_drive_pid(40, 127);
+  easy.set_drive_pid(40, 120);
   easy.wait_drive();
 }
 
 void driverStart() {
-  // hang_piston.set_value(true);
+  intake = -120;
   lem.setPose(-38, -58, 90);
   lem.turnTo(-56, -41, 2000, false);
   lem.moveToPoint(-56, -41, 2000, false);
   lem.turnTo(46, -3, 2000);
-  // hang_piston.set_value(false);
   lem.waitUntilDone();
   back_wings.set_value(true);
   cata.state = 3;
