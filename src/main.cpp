@@ -54,17 +54,13 @@ void callSelectedAuton() {
 }
 
 void initialize() {
-  ez::print_ez_template();
-  pros::delay(500);
-  easy.toggle_modify_curve_with_controller(false);
-  easy.set_active_brake(0);
-  easy.set_curve_default(0, 0);
-  default_constants();
-  exit_condition_defaults();
+  //easy.initialize();
+  //easy.toggle_modify_curve_with_controller(false);
+  //easy.set_active_brake(0);
+  //easy.set_curve_default(0, 0);
   pros::lcd::initialize();
   pros::lcd::register_btn1_cb(autonSelector);
-  easy.initialize();
-  lem.calibrate(false);
+  lem.calibrate();
   pros::Task continuous{[=] { // creates a lambda task for catapult control
     cata.control();
   }};
@@ -76,7 +72,6 @@ void disabled() { callSelectedAuton(); }
 void competition_initialize() { callSelectedAuton(); }
 
 void autonomous() {
-  pros::delay(1000);
   easy.reset_pid_targets();  // Resets PID targets to 0
   easy.reset_gyro();         // Reset gyro position to 0
   easy.reset_drive_sensor(); // Reset drive sensors to 0

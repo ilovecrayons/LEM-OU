@@ -12,18 +12,29 @@ void default_constants() {
   easy.set_slew_min_power(80, 80);
   easy.set_slew_distance(7, 7);
   easy.set_pid_constants(&easy.headingPID, 12, 0, 20, 0);
-  easy.set_pid_constants(&easy.forward_drivePID, 0.45, 0, 4, 0);
-  easy.set_pid_constants(&easy.backward_drivePID, 0.45, 0, 4, 0);
+  easy.set_pid_constants(&easy.forward_drivePID, 0.5, 0, 4, 0);
+  easy.set_pid_constants(&easy.backward_drivePID, 0.5, 0, 4, 0);
   easy.set_pid_constants(&easy.turnPID, 5, 0.003, 47, 15);
   easy.set_pid_constants(&easy.swingPID, 7, 0, 50, 0);
 }
 
 void exit_condition_defaults() {
   easy.set_exit_condition(easy.turn_exit, 35, 1, 150, 3, 250, 500);
-  easy.set_exit_condition(easy.swing_exit, 50, 2, 250, 5, 250, 500);
-  easy.set_exit_condition(easy.drive_exit, 35, 2, 150, 3, 250, 500);
+  easy.set_exit_condition(easy.swing_exit, 50, 1, 250, 3, 250, 500);
+  easy.set_exit_condition(easy.drive_exit, 35, 2, 150, 4, 250, 500);
 }
+/*
+void ez_defaults(){
+  chassis.set_slew_min_power(80, 80);
+  chassis.set_slew_distance(7, 7);
+  chassis.set_pid_constants(&chassis.headingPID, 11, 0, 20, 0);
+  chassis.set_pid_constants(&chassis.forward_drivePID, 0.45, 0, 5, 0);
+  chassis.set_pid_constants(&chassis.backward_drivePID, 0.45, 0, 5, 0);
+  chassis.set_pid_constants(&chassis.turnPID, 5, 0.003, 35, 15);
+  chassis.set_pid_constants(&chassis.swingPID, 7, 0, 45, 0);
 
+}
+*/
 void closeSafe() {
   lem.setPose(-46.451, -57.626, 135);
   intake = -120;
@@ -136,54 +147,56 @@ void trustAlliance() {
 }
 
 void farSafe() {
-  easy.set_drive_pid(37, 100);
-  easy.wait_drive();
-  easy.set_drive_pid(37, 100);
-  easy.wait_drive();
-  easy.set_drive_pid(37, 100);
-  easy.wait_drive();
-  easy.set_drive_pid(37, 100);
-  easy.wait_drive();
-  return;
   intake = -120;
-  easy.set_drive_pid(5.5, 100);
+  easy.set_drive_pid(6, 100);
   easy.wait_drive();
   easy.set_drive_pid(-37, 80);
   easy.wait_drive();
   easy.set_swing_pid(ez::LEFT_SWING, -45, 120);
   easy.wait_drive();
   back_wings.set_value(true);
-  easy.set_drive_pid(-13, 120);
-  easy.wait_drive();
-  easy.set_swing_pid(ez::LEFT_SWING, -90, 120);
+  easy.set_drive_pid(-10, 120);
   easy.wait_drive();
   back_wings.set_value(false);
+  easy.set_swing_pid(ez::LEFT_SWING, -87, 120);
+  easy.wait_drive();
+  
 
   easy.set_drive_pid(-17, 120);
   easy.wait_drive();
-  easy.set_drive_pid(20, 120);
+  easy.set_drive_pid(10, 120);
   easy.wait_drive();
-  easy.set_turn_pid(90, 120);
-  easy.wait_drive();
-  easy.set_drive_pid(24, 120);
-  easy.wait_drive();
-  easy.set_drive_pid(-21, 120);
-  easy.wait_drive();
-  easy.set_turn_pid(27, 120);
-  easy.wait_drive();
-  intake = -120;
-  easy.set_drive_pid(49, 120);
-  easy.wait_drive();
-  easy.set_turn_pid(90, 120);
-  easy.wait_drive();
-  easy.set_drive_pid(20, 120);
-  easy.wait_drive();
-  easy.set_swing_pid(ez::LEFT_SWING, 180, 120);
+  easy.set_turn_pid(-267, 120);
   easy.wait_drive();
   intake = 120;
-  // wings
-  easy.set_drive_pid(40, 120);
+  easy.set_drive_pid(15, 120);
   easy.wait_drive();
+  easy.set_drive_pid(-15, 120);
+  easy.wait_drive();
+  easy.set_turn_pid(-343, 120);
+  easy.wait_drive();
+  intake = -120;
+  easy.set_drive_pid(48.5, 120);
+  easy.wait_drive();
+  easy.set_turn_pid(-210, 120);
+  easy.wait_drive();
+  easy.set_drive_pid(20, 120);
+  intake = 120;
+  easy.wait_drive();
+  easy.set_turn_pid(-330, 120);
+  easy.wait_drive();
+  easy.set_drive_pid(26, 120);
+  intake = -120;
+  easy.wait_drive();
+  easy.set_turn_pid(-180, 120);
+  easy.wait_drive();
+  front_wings.set_value(true);
+  easy.set_drive_pid(30, 120);
+  intake = 120;
+  easy.wait_drive();
+  front_wings.set_value(false);
+  easy.set_drive_pid(-10, 120);
+
 }
 
 void driverStart() {
