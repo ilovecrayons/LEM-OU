@@ -22,7 +22,8 @@ extern Motor right_back_motor;
 extern MotorGroup left_motors;
 extern MotorGroup right_motors;
 
-extern lemlib::Chassis chassis;
+extern lemlib::Chassis lem;
+extern Drive easy;
 
 extern Controller master;
 

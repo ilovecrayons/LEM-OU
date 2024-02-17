@@ -64,6 +64,33 @@ pros::Imu inertial_sensor(INERTIAL_SENSOR_PORT); // inertial sensor
 // auto selecter bumper switch
 pros::ADIDigitalIn bumper(BUMPER_PORT); // bumper sensor
 
+Drive easy(
+    // Left Chassis Ports (negative port will reverse it!)
+    //   the first port is the sensored port (when trackers are not used!)
+    {LEFT_FRONT_PORT, LEFT_MIDDLE_PORT,LEFT_BACK_PORT}
+
+    // Right Chassis Ports (negative port will reverse it!)
+    //   the first port is the sensored port (when trackers are not used!)
+    ,
+    {RIGHT_FRONT_PORT, RIGHT_MIDDLE_PORT, RIGHT_BACK_PORT}
+
+    // IMU Port
+    ,
+    INERTIAL_SENSOR_PORT
+
+    // Wheel Diameter
+    ,
+    3.25
+
+    // Cartridge RPM
+    ,
+    450
+
+    // External Gear Ratio
+    ,
+    1.333
+);
+
 // ANCHOR Chassis class
 lemlib::Drivetrain drivetrain{
     &left_motors,  // left drivetrain motors
@@ -105,7 +132,7 @@ lemlib::MoveToPoseParams moveToPoseParams{
   true, 0, 0.6, 127, 0, 0
 };
 
-lemlib::Chassis chassis(drivetrain, lateralController, angularController,
+lemlib::Chassis lem(drivetrain, lateralController, angularController,
                         sensors);
 
 

@@ -14,7 +14,7 @@ void sv() {
   // loop forever
   while (true) {
     lemlib::Pose pose =
-        chassis.getPose(); // get the current position of the robot
+        lem.getPose(); // get the current position of the robot
     pros::lcd::print(0, "x: %f", pose.x);           // print the x position
     pros::lcd::print(1, "y: %f", pose.y);           // print the y position
     pros::lcd::print(2, "heading: %f", pose.theta); // print the heading
@@ -47,7 +47,7 @@ void callSelectedAuton() {
       pros::lcd::print(5, "Trust Alliance");
       break;
     case 4:
-      pros::lcd::print(5, "far rush");
+      pros::lcd::print(5, "far safe");
     }
     pros::delay(20);
   }
@@ -56,7 +56,7 @@ void callSelectedAuton() {
 void initialize() {
   pros::lcd::initialize();
   pros::lcd::register_btn1_cb(autonSelector);
-  chassis.calibrate();
+  lem.calibrate();
   pros::Task continuous{[=] { // creates a lambda task for catapult control
     cata.control();
   }};
@@ -89,7 +89,7 @@ void autonomous() {
     break;
   case 4:
     pros::lcd::print(5, "far rush");
-    farRush();
+    farSafe();
     break;
   }
 }
