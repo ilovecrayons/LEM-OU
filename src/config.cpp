@@ -19,9 +19,9 @@ constexpr int SHOOTER_PORT{-15};
 constexpr int INERTIAL_SENSOR_PORT{16};
 
 #define FRONT_WINGS_PORT 'E'
-#define BACK_WINGS_PORT 'B'
-#define HANG_PORT 'C'
-#define BUMPER_PORT 'D'
+#define BACK_WINGS_PORT 'F'
+#define LEFT_HANG_PORT 'C'
+#define RIGHT_HANG_PORT 'D'
 
 // ANCHOR Robot setup
 
@@ -54,39 +54,22 @@ pros::Motor shooter(SHOOTER_PORT, pros::E_MOTOR_GEAR_RED); // red cartridge, 11W
 
 pros::ADIDigitalOut front_wings(FRONT_WINGS_PORT);   // wing mechanism piston
 pros::ADIDigitalOut back_wings(BACK_WINGS_PORT); // wing mechanism piston
-pros::ADIDigitalOut hang_piston(HANG_PORT);        // hang piston
-
+pros::ADIDigitalOut left_hang_piston(LEFT_HANG_PORT);        // hang piston
+pros::ADIDigitalOut right_hang_piston(RIGHT_HANG_PORT);        // hang piston
 // Define sensors:
-
 
 pros::Imu inertial_sensor(INERTIAL_SENSOR_PORT); // inertial sensor
 
-// auto selecter bumper switch
-pros::ADIDigitalIn bumper(BUMPER_PORT); // bumper sensor
-
 Drive easy(
-    // Left Chassis Ports (negative port will reverse it!)
-    //   the first port is the sensored port (when trackers are not used!)
     {LEFT_FRONT_PORT, LEFT_MIDDLE_PORT,LEFT_BACK_PORT}
-
-    // Right Chassis Ports (negative port will reverse it!)
-    //   the first port is the sensored port (when trackers are not used!)
     ,
     {RIGHT_FRONT_PORT, RIGHT_MIDDLE_PORT, RIGHT_BACK_PORT}
-
-    // IMU Port
     ,
     INERTIAL_SENSOR_PORT
-
-    // Wheel Diameter
     ,
     3.25
-
-    // Cartridge RPM
     ,
     600
-
-    // External Gear Ratio
     ,
     1.333
 );

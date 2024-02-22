@@ -8,7 +8,7 @@ double turning;
 float up;
 float down;
 bool lifted = false;
-int autoSelector = 4;
+int autoSelector = 2;
 
 void sv() {
   // loop forever
@@ -28,6 +28,25 @@ void autonSelector() {
 
   if (autoSelector > 4) {
     autoSelector = 0;
+  }
+}
+
+void initializeInstance() {
+  if (autoSelector == 4) {
+    pros::delay(500);
+    easy.initialize();
+    easy.reset_pid_targets();  // Resets PID targets to 0
+    easy.reset_gyro();         // Reset gyro position to 0
+    easy.reset_drive_sensor(); // Reset drive sensors to 0
+    easy.set_drive_brake(MOTOR_BRAKE_HOLD);
+    easy.toggle_modify_curve_with_controller(false);
+    easy.set_active_brake(0);
+    easy.set_curve_default(0, 0);
+    pros::lcd::print(4, "initialized");
+  } else {
+    pros::delay(500);
+    lem.calibrate();
+    pros::Task sophieVang(sv);
   }
 }
 
@@ -54,17 +73,14 @@ void callSelectedAuton() {
 }
 
 void initialize() {
-  //easy.initialize();
-  //easy.toggle_modify_curve_with_controller(false);
-  //easy.set_active_brake(0);
-  //easy.set_curve_default(0, 0);
+  lem.calibrate();
   pros::lcd::initialize();
   pros::lcd::register_btn1_cb(autonSelector);
-  lem.calibrate();
+  pros::lcd::register_btn2_cb(initializeInstance);
   pros::Task continuous{[=] { // creates a lambda task for catapult control
     cata.control();
   }};
-  pros::Task sophieVang(sv);
+
 }
 
 void disabled() { callSelectedAuton(); }
@@ -72,10 +88,6 @@ void disabled() { callSelectedAuton(); }
 void competition_initialize() { callSelectedAuton(); }
 
 void autonomous() {
-  easy.reset_pid_targets();  // Resets PID targets to 0
-  easy.reset_gyro();         // Reset gyro position to 0
-  easy.reset_drive_sensor(); // Reset drive sensors to 0
-  easy.set_drive_brake(MOTOR_BRAKE_HOLD);
   switch (autoSelector) {
   case 0:
     pros::lcd::print(5, "Close Safe");
@@ -181,10 +193,12 @@ void opcontrol() {
       pros::delay(300);
     }
     if (lifted) {
-      hang_piston.set_value(false);
+      left_hang_piston.set_value(true);
+      right_hang_piston.set_value(true);
     }
     if (!lifted) {
-      hang_piston.set_value(true);
+      right_hang_piston.set_value(false);
+      left_hang_piston.set_value(false);
     }
 
     pros::delay(20);

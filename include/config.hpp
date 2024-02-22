@@ -6,9 +6,8 @@ using namespace pros;
 
 extern ADIDigitalOut front_wings;
 extern ADIDigitalOut back_wings;
-extern ADIDigitalOut hang_piston;
-
-extern ADIDigitalIn bumper;
+extern ADIDigitalOut left_hang_piston;
+extern ADIDigitalOut right_hang_piston;
 
 extern Motor intake;
 extern Motor shooter;

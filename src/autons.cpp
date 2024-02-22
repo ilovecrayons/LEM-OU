@@ -51,7 +51,7 @@ void closeSafe() {
   lem.turnTo(-8, -61, 1000);
   lem.waitUntilDone();
   pros::delay(6000);
-  lem.moveToPoint(-10.7, -61, 3000, true);
+  lem.moveToPoint(-11.2, -61, 3000, true);
 }
 
 void closeDisrupt() {
