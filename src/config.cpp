@@ -18,8 +18,8 @@ constexpr int SHOOTER_PORT{-15};
 
 constexpr int INERTIAL_SENSOR_PORT{16};
 
-#define FRONT_WINGS_PORT 'E'
-#define BACK_WINGS_PORT 'F'
+#define FRONT_WINGS_PORT 'B'
+#define BACK_WINGS_PORT 'H'
 #define LEFT_HANG_PORT 'C'
 #define RIGHT_HANG_PORT 'D'
 
@@ -121,8 +121,8 @@ lemlib::Chassis lem(drivetrain, lateralController, angularController,
 
 // ANCHOR catapult control
 void catapult::lower() { // catapult reset function
-  while ((int)shooter.get_position() % 180 < 150 ) {   // executes while catapult is not at the desired angle
-    shooter = 113; // outputs power to the catapult motor
+  while ((int)shooter.get_position() % 180 < 149 ) {   // executes while catapult is not at the desired angle
+    shooter = 100; // outputs power to the catapult motor
     pros::delay(10);
   }
   shooter.brake(); // stops the catapult motor
@@ -136,7 +136,7 @@ void catapult::control() {
   shooter = 0;
   while (true) {
     
-    if ((int) shooter.get_position() % 180 < 150 && cata.state != 1 && cata.state != 3) // checks if the catapult should be lowered
+    if ((int) shooter.get_position() % 180 < 145 && cata.state != 1 && cata.state != 3) // checks if the catapult should be lowered
     {
       cata.state = 1;
       cata.lower();
@@ -144,10 +144,7 @@ void catapult::control() {
     
     if (cata.state == 3) // if cata is set to continuous
     {
-      shooter = 110;
-    }
-    if (cata.state == 0) {
-      shooter = 0;
+      shooter = 122;
     }
     pros::delay(15);
     //master.print(1, 1, "efficiency %f", shooter.get_position());

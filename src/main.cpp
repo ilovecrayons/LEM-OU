@@ -8,7 +8,7 @@ double turning;
 float up;
 float down;
 bool lifted = false;
-int autoSelector = 2;
+int autoSelector = 0;
 
 void sv() {
   // loop forever
@@ -32,7 +32,11 @@ void autonSelector() {
 }
 
 void initializeInstance() {
-  if (autoSelector == 4) {
+  if (autoSelector == 0 || autoSelector == 1) {
+    pros::delay(500);
+    lem.calibrate();
+    pros::Task sophieVang(sv);
+  } else {
     pros::delay(500);
     easy.initialize();
     easy.reset_pid_targets();  // Resets PID targets to 0
@@ -43,10 +47,6 @@ void initializeInstance() {
     easy.set_active_brake(0);
     easy.set_curve_default(0, 0);
     pros::lcd::print(4, "initialized");
-  } else {
-    pros::delay(500);
-    lem.calibrate();
-    pros::Task sophieVang(sv);
   }
 }
 
@@ -73,7 +73,8 @@ void callSelectedAuton() {
 }
 
 void initialize() {
-  lem.calibrate();
+  if(autoSelector == 2);
+    ///easy.initialize();
   pros::lcd::initialize();
   pros::lcd::register_btn1_cb(autonSelector);
   pros::lcd::register_btn2_cb(initializeInstance);
@@ -96,18 +97,22 @@ void autonomous() {
   case 1:
     pros::lcd::print(5, "Close Disrupt");
     closeDisrupt();
+    easy.set_drive_brake(MOTOR_BRAKE_COAST);
     break;
   case 2:
     pros::lcd::print(5, "Skills");
     skills();
+    easy.set_drive_brake(MOTOR_BRAKE_COAST);
     break;
   case 3:
     pros::lcd::print(5, "Trust Alliance");
     trustAlliance();
+    easy.set_drive_brake(MOTOR_BRAKE_COAST);
     break;
   case 4:
-    pros::lcd::print(5, "far rush");
+    pros::lcd::print(5, "far safe");
     farSafe();
+    easy.set_drive_brake(MOTOR_BRAKE_COAST);
     break;
   }
 }
@@ -136,8 +141,10 @@ void timer() {
 void opcontrol() {
   pros::Task timerTask(timer);
   if (autoSelector == 2) {
-    driverStart();
+    //driverStart();
   }
+  if (autoSelector != 0)
+    easy.set_drive_brake(MOTOR_BRAKE_COAST);
   while (true) { // calls the arcade drive function
     arcadeCurve(pros::E_CONTROLLER_ANALOG_LEFT_Y,
                 pros::E_CONTROLLER_ANALOG_RIGHT_X, master, 10);
