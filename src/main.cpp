@@ -26,13 +26,13 @@ void autonSelector() {
 
   autoSelector++;
 
-  if (autoSelector > 4) {
+  if (autoSelector > 5) {
     autoSelector = 0;
   }
 }
 
 void initializeInstance() {
-  if (autoSelector == 0 || autoSelector == 1) {
+  if (autoSelector == 0 || autoSelector == 1 || autoSelector == 5) {
     pros::delay(500);
     lem.calibrate();
     pros::Task sophieVang(sv);
@@ -67,6 +67,10 @@ void callSelectedAuton() {
       break;
     case 4:
       pros::lcd::print(5, "far safe");
+      break;
+    case 5:
+      pros::lcd::print(5, "david lin driver skill issue");
+      break;
     }
     pros::delay(20);
   }
@@ -140,8 +144,8 @@ void timer() {
 // ANCHOR opctrl
 void opcontrol() {
   pros::Task timerTask(timer);
-  if (autoSelector == 2) {
-    //driverStart();
+  if (autoSelector == 5) {
+    driverStart();
   }
   if (autoSelector != 0)
     easy.set_drive_brake(MOTOR_BRAKE_COAST);

@@ -87,11 +87,10 @@ void skills() {
   easy.wait_drive();
   back_wings.set_value(true);
   cata.state = 3;
-  pros::delay(5000);
-  // pros::delay(23000);
-  cata.state = 0;
+  pros::delay(21700);
   back_wings.set_value(false);
   pros::delay(300);
+  cata.state = 0;
   easy.set_turn_pid(90, 120);
   easy.wait_drive();
   easy.set_drive_pid(-12, 120);
@@ -107,8 +106,10 @@ void skills() {
   easy.set_drive_pid(-84, 120);
   easy.wait_drive();
   easy.set_turn_pid(135, 120);
-  easy.wait_drive();
+  easy.wait_until(150);
   back_wings.set_value(true);
+  easy.wait_drive();
+
   easy.set_drive_pid(-24, 120);
   easy.wait_until(-10);
   back_wings.set_value(false);
@@ -136,17 +137,13 @@ void skills() {
   easy.set_drive_pid(15, 120);
   easy.wait_drive();
   back_wings.set_value(false);
-  easy.set_turn_pid(0, 120);
+  easy.set_turn_pid(67, 120);
   easy.wait_drive();
-  easy.set_drive_pid(-15.5, 120);
-  easy.wait_drive();
-  easy.set_turn_pid(-90, 120);
-  easy.wait_drive();
-  easy.set_drive_pid(10.5, 120);
+  easy.set_drive_pid(-17, 120);
   easy.wait_drive();
   easy.set_swing_pid(ez::LEFT_SWING, 0, 120);
   easy.wait_drive();
-  easy.set_drive_pid(30, 80);
+  easy.set_drive_pid(31, 80);
   easy.wait_drive();
   easy.set_drive_pid(-32, 120);
   easy.wait_drive();
@@ -158,23 +155,23 @@ void skills() {
   easy.wait_drive();
   easy.set_drive_pid(-32, 120);
   easy.wait_drive();
-  easy.set_turn_pid(-90, 120);
+  easy.set_turn_pid(90, 120);
   easy.wait_drive();
   intake = 120;
-  easy.set_drive_pid(35, 120);
+  easy.set_drive_pid(-30, 120);
   easy.wait_drive();
-  easy.set_turn_pid(50, 120);
+  back_wings.set_value(true);
+  easy.set_turn_pid(240, 120);
   easy.wait_drive();
   intake = 0;
-  front_wings.set_value(true);
-  easy.set_drive_pid(18, 120);
+  easy.set_drive_pid(-20, 120);
   easy.wait_drive();
-  easy.set_swing_pid(ez::RIGHT_SWING, 0, 120);
+  easy.set_turn_pid(180, 120);
+  easy.wait_drive();
+  easy.set_drive_pid(-18, 120);
   easy.wait_drive();
   easy.set_drive_pid(15, 120);
-  easy.wait_drive();
-  easy.set_drive_pid(-15, 120);
-  front_wings.set_value(false);
+  back_wings.set_value(false);
   easy.wait_drive();
   easy.set_turn_pid(110, 120);
   easy.wait_drive();
@@ -183,7 +180,7 @@ void skills() {
   easy.set_turn_pid(225, 120);
   easy.wait_drive();
   back_wings.set_value(true);
-  easy.set_drive_pid(-20, 120);
+  easy.set_drive_pid(-23, 120);
   easy.wait_until(-10);
   back_wings.set_value(false);
   easy.wait_drive();
@@ -302,15 +299,12 @@ void farSafe() {
 }
 
 void driverStart() {
-  easy.set_turn_pid(45, 120);
-  easy.wait_drive();
-  easy.set_drive_pid(-28, 120);
-  easy.wait_drive();
-  easy.set_turn_pid(-19.5, 120);
-  easy.wait_drive();
+
+  lem.setPose(-38, -58, 90);
+  lem.turnTo(-56, -41, 2000, false);
+  lem.moveToPoint(-56, -41, 2000, false);
+  lem.turnTo(46, -3, 2000);
+  lem.waitUntilDone();
   back_wings.set_value(true);
   cata.state = 3;
-  pros::delay(23000);
-  cata.state = 0;
-  back_wings.set_value(false);
 }
