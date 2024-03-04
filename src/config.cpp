@@ -18,7 +18,8 @@ constexpr int SHOOTER_PORT{-15};
 
 constexpr int INERTIAL_SENSOR_PORT{16};
 
-#define FRONT_WINGS_PORT 'B'
+#define LEFT_WINGS_PORT 'B'
+#define RIGHT_WINGS_PORT 'F'
 #define BACK_WINGS_PORT 'H'
 #define LEFT_HANG_PORT 'C'
 #define RIGHT_HANG_PORT 'D'
@@ -52,7 +53,8 @@ pros::Motor shooter(SHOOTER_PORT, pros::E_MOTOR_GEAR_RED); // red cartridge, 11W
 
 // Define pneumatics:
 
-pros::ADIDigitalOut front_wings(FRONT_WINGS_PORT);   // wing mechanism piston
+pros::ADIDigitalOut right_wings(RIGHT_WINGS_PORT); // wing mechanism piston
+pros::ADIDigitalOut left_wings(LEFT_WINGS_PORT);                                                
 pros::ADIDigitalOut back_wings(BACK_WINGS_PORT); // wing mechanism piston
 pros::ADIDigitalOut left_hang_piston(LEFT_HANG_PORT);        // hang piston
 pros::ADIDigitalOut right_hang_piston(RIGHT_HANG_PORT);        // hang piston
@@ -121,7 +123,7 @@ lemlib::Chassis lem(drivetrain, lateralController, angularController,
 
 // ANCHOR catapult control
 void catapult::lower() { // catapult reset function
-  while ((int)shooter.get_position() % 180 < 149 ) {   // executes while catapult is not at the desired angle
+  while ((int)shooter.get_position() % 180 < 160 ) {   // executes while catapult is not at the desired angle
     shooter = 100; // outputs power to the catapult motor
     pros::delay(10);
   }
@@ -136,7 +138,7 @@ void catapult::control() {
   shooter = 0;
   while (true) {
     
-    if ((int) shooter.get_position() % 180 < 145 && cata.state != 1 && cata.state != 3) // checks if the catapult should be lowered
+    if ((int) shooter.get_position() % 180 < 150 && cata.state != 1 && cata.state != 3) // checks if the catapult should be lowered
     {
       cata.state = 1;
       cata.lower();
@@ -144,7 +146,7 @@ void catapult::control() {
     
     if (cata.state == 3) // if cata is set to continuous
     {
-      shooter = 122;
+      shooter = 110;
     }
     pros::delay(15);
     //master.print(1, 1, "efficiency %f", shooter.get_position());

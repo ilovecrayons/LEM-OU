@@ -3,6 +3,12 @@
 #include "main.h"
 #include "pros/rtos.hpp"
 
+namespace vang {
+void fuckdavidlin() {
+  
+}
+}
+
 constexpr int EARLY_EXIT{0};
 constexpr int MIN_SPEED{0};
 ASSET(closesafe1_txt)
@@ -57,18 +63,18 @@ void closeSafe() {
 void closeDisrupt() {
   lem.setPose(-35, -55.4, 0);
   intake = -120;
-  front_wings.set_value(true);
+  right_wings.set_value(true);
   lem.moveToPoint(-24.994, -11.075, 2000);
   lem.waitUntil(45);
-  front_wings.set_value(false);
+  right_wings.set_value(false);
   lem.moveToPoint(-27, -13.5, 2000, false);
   lem.waitUntilDone();
   lem.turnTo(-5.8, -12, 2000);
   lem.waitUntilDone();
-  front_wings.set_value(true);
+  right_wings.set_value(true);
   lem.moveToPoint(-3, -12, 2000);
   lem.waitUntilDone();
-  front_wings.set_value(false);
+  right_wings.set_value(false);
   lem.turnTo(-54, -56, 2000, false);
   lem.moveToPoint(-48, -51, 2000, false, 80);
   lem.waitUntilDone();
@@ -87,36 +93,48 @@ void skills() {
   easy.wait_drive();
   back_wings.set_value(true);
   cata.state = 3;
-  pros::delay(21700);
+  //pros::delay(31700);
   back_wings.set_value(false);
   pros::delay(300);
   cata.state = 0;
-  easy.set_turn_pid(90, 120);
+  easy.set_turn_pid(45, 120);
   easy.wait_drive();
-  easy.set_drive_pid(-12, 120);
+  easy.set_swing_pid(ez::RIGHT_SWING, 90, 120);
   easy.wait_drive();
-  easy.set_drive_pid(12, 120);
-  easy.wait_drive();
-  easy.set_turn_pid(225, 120);
-  easy.wait_drive();
-  easy.set_drive_pid(-24, 120);
-  easy.wait_drive();
-  easy.set_turn_pid(180, 100);
-  easy.wait_drive();
-  easy.set_drive_pid(-84, 120);
-  easy.wait_drive();
-  easy.set_turn_pid(135, 120);
-  easy.wait_until(150);
-  back_wings.set_value(true);
-  easy.wait_drive();
+  easy.set_mode(ez::DISABLE);
+  easy.set_tank(-127, -127);
+  pros::delay(500);
+  easy.set_tank(0, 0);
+  easy.set_mode(ez::DRIVE);
 
-  easy.set_drive_pid(-24, 120);
-  easy.wait_until(-10);
-  back_wings.set_value(false);
+  easy.set_drive_pid(10, 120);
   easy.wait_drive();
-  easy.set_swing_pid(ez::LEFT_SWING, 90, 120);
+  easy.set_turn_pid(45, 120);
   easy.wait_drive();
-  easy.set_drive_pid(6, 120);
+  easy.set_drive_pid(29, 120);
+  easy.wait_drive();
+  easy.set_turn_pid(0, 100);
+  easy.wait_drive();
+  intake = 120;
+  easy.set_drive_pid(83, 120);
+  easy.wait_drive();
+  easy.set_swing_pid(ez::RIGHT_SWING, -45, 120);
+  right_wings.set_value(true);
+  left_wings.set_value(true);
+  easy.wait_drive();
+  easy.set_drive_pid(26, 120);
+  easy.wait_until(10);
+  right_wings.set_value(false);
+  left_wings.set_value(false);
+  easy.wait_drive();
+  easy.set_turn_pid(-90, 120);
+  easy.wait_drive();
+  easy.set_drive_pid(-6, 120);
+  easy.wait_drive();
+  easy.set_turn_pid(-225, 120);
+  intake = 0;
+  easy.wait_drive();
+  easy.set_swing_pid(ez::LEFT_SWING, -270, 120);
   easy.wait_drive();
   easy.set_mode(ez::DISABLE);
   easy.set_tank(-127, -127);
@@ -155,20 +173,25 @@ void skills() {
   easy.wait_drive();
   easy.set_drive_pid(-32, 120);
   easy.wait_drive();
-  easy.set_turn_pid(90, 120);
+  easy.set_turn_pid(-90, 120);
   easy.wait_drive();
   intake = 120;
-  easy.set_drive_pid(-30, 120);
+  easy.set_drive_pid(30, 120);
   easy.wait_drive();
-  back_wings.set_value(true);
-  easy.set_turn_pid(240, 120);
+  right_wings.set_value(true);
+  easy.set_turn_pid(60, 120);
   easy.wait_drive();
+  right_wings.set_value(false);
   intake = 0;
+  easy.set_turn_pid(240, 120);
+  easy.wait_until(220);
+  back_wings.set_value(true);
+  easy.wait_drive();
   easy.set_drive_pid(-20, 120);
   easy.wait_drive();
-  easy.set_turn_pid(180, 120);
+  easy.set_swing_pid(ez::LEFT_SWING, 180, 120);
   easy.wait_drive();
-  easy.set_drive_pid(-18, 120);
+  easy.set_drive_pid(-14, 120);
   easy.wait_drive();
   easy.set_drive_pid(15, 120);
   back_wings.set_value(false);
@@ -290,21 +313,22 @@ void farSafe() {
   easy.wait_drive();
   easy.set_turn_pid(-180, 120);
   easy.wait_drive();
-  front_wings.set_value(true);
+  right_wings.set_value(true);
   easy.set_drive_pid(30, 120);
   intake = 120;
   easy.wait_drive();
-  front_wings.set_value(false);
+  right_wings.set_value(false);
   easy.set_drive_pid(-10, 120);
 }
 
 void driverStart() {
 
   lem.setPose(-38, -58, 90);
-  lem.turnTo(-56, -41, 2000, false);
-  lem.moveToPoint(-56, -41, 2000, false);
-  lem.turnTo(46, -3, 2000);
+  lem.turnTo(-56, -40, 2000, false);
+  lem.moveToPoint(-56, -40, 2000, false);
+  lem.turnTo(46, 3, 2000);
   lem.waitUntilDone();
   back_wings.set_value(true);
   cata.state = 3;
+  
 }

@@ -4,7 +4,8 @@ using namespace pros;
 
 // externalize device configurations
 
-extern ADIDigitalOut front_wings;
+extern ADIDigitalOut right_wings;
+extern ADIDigitalOut left_wings;
 extern ADIDigitalOut back_wings;
 extern ADIDigitalOut left_hang_piston;
 extern ADIDigitalOut right_hang_piston;

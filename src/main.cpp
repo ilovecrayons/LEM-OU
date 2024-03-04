@@ -146,6 +146,9 @@ void opcontrol() {
   pros::Task timerTask(timer);
   if (autoSelector == 5) {
     driverStart();
+    while (!master.get_digital(DIGITAL_B))
+      ;
+    
   }
   if (autoSelector != 0)
     easy.set_drive_brake(MOTOR_BRAKE_COAST);
@@ -171,10 +174,12 @@ void opcontrol() {
     // wing
     if (master.get_digital(DIGITAL_R1)) // wing expand
     {
-      front_wings.set_value(true);
+      right_wings.set_value(true);
+      left_wings.set_value(true);
     } else if (!master.get_digital(DIGITAL_R1)) // wing retract
     {
-      front_wings.set_value(false);
+      right_wings.set_value(false);
+      left_wings.set_value(false);
     }
 
     if (master.get_digital(DIGITAL_R2)) // wing expand
@@ -189,13 +194,13 @@ void opcontrol() {
     if (cata.state != 3 && master.get_digital(DIGITAL_B)) // continuous launch
     {
       cata.state = 3;
-      pros::delay(500);
+      pros::delay(300);
     }
     // catapult
     if (cata.state == 3 && master.get_digital(DIGITAL_B)) // continuous launch
     {
       cata.state = 0;
-      pros::delay(500);
+      pros::delay(300);
     }
 
     // hang mechanism
