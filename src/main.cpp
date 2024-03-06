@@ -88,7 +88,11 @@ void initialize() {
 
 }
 
-void disabled() { callSelectedAuton(); }
+void disabled() {
+  left_hang_piston.set_value(false);
+  right_hang_piston.set_value(false);
+  callSelectedAuton();
+}
 
 void competition_initialize() { callSelectedAuton(); }
 
