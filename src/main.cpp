@@ -47,6 +47,7 @@ void initializeInstance() {
     easy.set_active_brake(0);
     easy.set_curve_default(0, 0);
     pros::lcd::print(4, "initialized");
+    exit_condition_defaults();
   }
 }
 
