@@ -146,7 +146,7 @@ void catapult::control() {
     
     if (cata.state == 3) // if cata is set to continuous
     {
-      shooter = 110;
+      shooter = 115;
     }
     pros::delay(15);
   }
