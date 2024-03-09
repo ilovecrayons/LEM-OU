@@ -32,7 +32,7 @@ void autonSelector() {
 }
 
 void initializeInstance() {
-  if (autoSelector == 0 || autoSelector == 1 || autoSelector == 5) {
+  if (autoSelector == 0 || autoSelector == 5) {
     pros::delay(500);
     lem.calibrate();
     pros::Task sophieVang(sv);

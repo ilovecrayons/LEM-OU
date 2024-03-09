@@ -40,22 +40,21 @@ void ez_defaults(){
 }
 */
 void closeSafe() {
-  lem.setPose(-46.451, -57.626, 135);
   intake = -120;
-  pros::delay(2000);
+  easy.set_angle(45);
   back_wings.set_value(true);
-  pros::delay(500);
-  intake = 120;
-  lem.turnTo(-55, -9, 1000);
-  lem.waitUntil(45);
-  back_wings.set_value(false);
-  lem.turnTo(-30, -65, 1000);
-  lem.waitUntilDone();
-  lem.moveToPoint(-30, -65, 3000, true);
-  lem.turnTo(-9, -65, 1000);
-  lem.waitUntilDone();
-  pros::delay(6000);
-  lem.moveToPoint(-10, -65, 3000, true);
+  pros::delay(1000);
+  easy.set_turn_pid(-45, 80);
+  easy.wait_drive();
+  easy.set_turn_pid(20, 120);
+  easy.wait_drive();
+  easy.set_drive_pid(17, 120);
+  easy.wait_drive();
+  pros::delay(5000);
+  easy.set_turn_pid(0, 120);
+  easy.wait_drive();
+  easy.set_drive_pid(30, 120);
+
 }
 
 void closeDisrupt() {
@@ -219,7 +218,7 @@ void skills() {
   left_wings.set_value(false);
   easy.wait_drive();
   
-  easy.set_drive_pid(30, 100);
+  easy.set_drive_pid(28, 100);
   easy.wait_drive();
   easy.set_drive_pid(-34, 120);
   easy.wait_drive();
@@ -227,16 +226,19 @@ void skills() {
   right_wings.set_value(false);
   easy.wait_drive();
   left_wings.set_value(true);
-  easy.set_drive_pid(20, 120);
+  easy.set_drive_pid(17, 120);
   easy.wait_drive();
-  easy.set_turn_pid(50, 80);
+  easy.set_swing_pid(ez::LEFT_SWING, 0, 120);
+  easy.wait_drive();
+  easy.set_turn_pid(45, 120);
   easy.wait_drive();
   right_wings.set_value(true);
-  easy.wait_drive();
   
   easy.set_mode(ez::DISABLE);
   easy.set_tank(80, 120);
-  pros::delay(1300);
+  pros::delay(600);
+  easy.set_tank(80, 120);
+  pros::delay(600);
   easy.set_tank(0, 0);
   easy.set_mode(ez::DRIVE);
 
@@ -247,7 +249,7 @@ void skills() {
 
   easy.set_drive_pid(-20, 80);
   easy.wait_drive();
-  easy.set_turn_pid(-75, 120);
+  easy.set_turn_pid(-70, 120);
   easy.wait_drive();
   left_wings.set_value(true);
   right_wings.set_value(true);
@@ -278,9 +280,14 @@ void skills() {
   easy.set_tank(0, -0);
   easy.set_mode(ez::DRIVE);
   easy.set_drive_pid(-9, 120);
+  easy.wait_drive();
 
-  
-  
+  easy.set_mode(ez::DISABLE);
+  easy.set_tank(127, 127);
+  pros::delay(500);
+  easy.set_tank(0, -0);
+  easy.set_mode(ez::DRIVE);
+  easy.set_drive_pid(-9, 120);
 }
 
 void trustAlliance() {
