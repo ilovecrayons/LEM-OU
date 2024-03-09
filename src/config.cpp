@@ -90,31 +90,33 @@ lemlib::OdomSensors sensors{nullptr, nullptr, nullptr, nullptr,
                             &inertial_sensor};
 
 lemlib::ControllerSettings lateralController{
-    10,  // kp
+    15,  // kp
     0,   // ki
-    20,  // kd
+    50,  // kd
     0,   // windup range
-    1,   // small error range
+    2,   // small error range
     100, // small timeout
-    3,   // big error range
-    500, // big error timeout
-    20    // slew
+    5,   // big error range
+    300, // big error timeout
+    5    // slew
 };
 
 lemlib::ControllerSettings angularController{
-    2.3,   // kp
-    0.3, // ki
-    13.5,  // kd
-    5,  // windup range
-    1,   // small error range
-    50,  // small timeout
-    3,   // big error range
-    500, // big error timeout
+    9,   // kp
+    0.35, // ki
+    50,  // kd
+    7,  // windup range
+  2,   // small error range
+    100,  // small timeout
+    4,   // big error range
+    300, // big error timeout
     0    // slew
 };
 
+
+
 lemlib::MoveToPoseParams moveToPoseParams{
-  true, 0, 0.6, 127, 0, 0
+  true, 3, 0.6, 127
 };
 
 lemlib::Chassis lem(drivetrain, lateralController, angularController,
@@ -146,7 +148,7 @@ void catapult::control() {
     
     if (cata.state == 3) // if cata is set to continuous
     {
-      shooter = 115;
+      shooter = 117;
     }
     pros::delay(15);
   }
