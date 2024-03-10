@@ -8,7 +8,7 @@ double turning;
 float up;
 float down;
 bool lifted = false;
-int autoSelector = 0;
+int autoSelector = 5;
 
 void sv() {
   // loop forever
@@ -32,7 +32,7 @@ void autonSelector() {
 }
 
 void initializeInstance() {
-  if (autoSelector == 0 || autoSelector == 5) {
+  if (autoSelector == 1 || autoSelector == 5) {
     pros::delay(500);
     lem.calibrate();
     pros::Task sophieVang(sv);
@@ -78,8 +78,7 @@ void callSelectedAuton() {
 }
 
 void initialize() {
-  if(autoSelector == 2);
-    ///easy.initialize();
+  lem.calibrate();
   pros::lcd::initialize();
   pros::lcd::register_btn1_cb(autonSelector);
   pros::lcd::register_btn2_cb(initializeInstance);

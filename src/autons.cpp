@@ -41,19 +41,22 @@ void ez_defaults(){
 */
 void closeSafe() {
   intake = -120;
-  easy.set_angle(45);
+  easy.set_angle(26);
   back_wings.set_value(true);
   pros::delay(1000);
   easy.set_turn_pid(-45, 80);
   easy.wait_drive();
-  easy.set_turn_pid(20, 120);
+  intake = 0;
+  back_wings.set_value(false);
+  easy.set_turn_pid(30, 120);
   easy.wait_drive();
-  easy.set_drive_pid(17, 120);
+  easy.set_drive_pid(16.5, 120);
   easy.wait_drive();
-  pros::delay(5000);
+  pros::delay(3000);
+  intake = 120;
   easy.set_turn_pid(0, 120);
   easy.wait_drive();
-  easy.set_drive_pid(30, 120);
+  easy.set_drive_pid(24.75, 120);
 
 }
 
@@ -310,53 +313,21 @@ void trustAlliance() {
 
 void farSafe() {
   intake = -120;
-  easy.set_drive_pid(6, 100);
+  easy.set_drive_pid(44, 120);
   easy.wait_drive();
-  easy.set_drive_pid(-33, 80);
-  easy.wait_drive();
-  easy.set_swing_pid(ez::LEFT_SWING, -45, 120);
-  easy.wait_drive();
-  back_wings.set_value(true);
-  easy.set_drive_pid(-10, 120);
-  easy.wait_drive();
-  back_wings.set_value(false);
-  easy.set_swing_pid(ez::LEFT_SWING, -87, 120);
-  easy.wait_drive();
-
-  easy.set_drive_pid(-15, 120);
-  easy.wait_drive();
-  easy.set_drive_pid(10, 120);
-  easy.wait_drive();
-  easy.set_turn_pid(-267, 120);
+  easy.set_turn_pid(90, 120);
   easy.wait_drive();
   intake = 120;
-  easy.set_drive_pid(15, 120);
+  left_wings.set_value(true);
+  right_wings.set_value(true);
+  easy.set_drive_pid(20, 120);
   easy.wait_drive();
   easy.set_drive_pid(-15, 120);
-  easy.wait_drive();
-  easy.set_turn_pid(-325, 120);
-  easy.wait_drive();
-  intake = -120;
-  easy.set_drive_pid(48.5, 120);
-  easy.wait_drive();
-  easy.set_turn_pid(-210, 120);
   easy.wait_drive();
   easy.set_drive_pid(20, 120);
-  intake = 120;
   easy.wait_drive();
-  easy.set_turn_pid(-330, 120);
+  easy.set_drive_pid(-15, 120);
   easy.wait_drive();
-  easy.set_drive_pid(26, 120);
-  intake = -120;
-  easy.wait_drive();
-  easy.set_turn_pid(-180, 120);
-  easy.wait_drive();
-  right_wings.set_value(true);
-  easy.set_drive_pid(30, 120);
-  intake = 120;
-  easy.wait_drive();
-  right_wings.set_value(false);
-  easy.set_drive_pid(-10, 120);
 }
 
 void driverStart() {

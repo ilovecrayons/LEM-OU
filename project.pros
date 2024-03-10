@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "LEM-OU",
+    "project_name": "eztemp skills",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -370,7 +370,7 @@
     },
     "upload_options": {
       "icon": "pros",
-      "slot": 1
+      "slot": 3
     }
   }
 }
